@@ -1,22 +1,22 @@
-{% extends 'home/base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block content %}
-    <div id="div1">
-        <div id="cssmenu">
-            <ul>
-                <li class="active"><a href="#">Sign up</a></li>
-                <li><a href="#"><i class="fa fa-home"></i>&nbsp;&nbsp; Home</a></li>
-            </ul>
-        </div>
-    </div>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> 
+</head>
+<body> 
+
     <div class="backdrop">
 
         <div class="imageDiv">
             <!-- <div class="bottomDiv"> -->
             <i class="fas fa-user iconbig"></i>
             <!-- </div> -->
-            <p id="p5">X&nbsp;</p>
             <p id="p4">SIGN UP</p>
             <p id="p1">Enter details</p>
             <form method="POST" action="{% url 'signup' %}">
@@ -63,11 +63,5 @@
             </form>
         </div>
     </div>
-{% endblock content %}
-
-
-
-<!-- <div class="input-container">
-    <i class="fa fa-envelope icon"></i>
-    <input class="input-field" type="text" placeholder="Email" name="email">
-</div> -->
+    </body>
+</html>   

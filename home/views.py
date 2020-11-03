@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import sessions
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
@@ -48,4 +48,10 @@ from django.core.files.storage import FileSystemStorage
 	# return render(request,'home/home.html')
 
 def home_view(request):
-	return render(request, 'home/home.html')
+	try:
+		request.session['email_id']
+		print(request.session['email_id'])
+	except:
+		return render(request, 'home/home.html')
+	finally:
+		return render(request, 'home/home.html')
