@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from home import views as v
 from dashboard import views as dv
+from register import views as regv
+
+#app_name = 'servicex'
 
 urlpatterns = [
 	path('',v.home_view, name="home"),
@@ -27,4 +30,6 @@ urlpatterns = [
 	path('dashboard/employee/earnings/',dv.employee_earnings, name="emp_earns"),
 	path('dashoboard/earnings/',dv.user_transactions,name="user_earns"),
     path('admin/', admin.site.urls),
+    path('register/', regv.signup, name="signup"),
+    path('login/',regv.login, name="login"),
 ]

@@ -1,0 +1,73 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div id="div1">
+        <div id="cssmenu">
+            <ul>
+                <li class="active"><a href="#">Sign up</a></li>
+                <li><a href="#"><i class="fa fa-home"></i>&nbsp;&nbsp; Home</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="backdrop">
+
+        <div class="imageDiv">
+            <!-- <div class="bottomDiv"> -->
+            <i class="fas fa-user iconbig"></i>
+            <!-- </div> -->
+            <p id="p5">X&nbsp;</p>
+            <p id="p4">SIGN UP</p>
+            <p id="p1">Enter details</p>
+            <form method="POST" action="{% url 'signup' %}">
+              {% csrf_token %}
+                <div class="input-container">
+                    <i class="fas fa-user icon"></i>
+                    <input class="login" type="text" name="fname" placeholder="First name">
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-mobile-alt icon"></i>
+                    <input class="login" type="text" name="lname" placeholder="Last name">
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-mobile-alt icon"></i>
+                    <input class="login" type="email" name="email" placeholder="Email">
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-mobile-alt icon"></i>
+                    <input class="login" type="password" name="password" placeholder="Password">
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-mobile-alt icon"></i>
+                    <input class="login" type="password" name="re_password" placeholder="Password">
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-mobile-alt icon"></i>
+                    <input class="login" type="text" name="gender" placeholder="Gender">
+                </div>
+
+                <div class="input-container">
+                    <i class="fas fa-lock icon"></i>
+                    <input class="login" type="number" name="age" placeholder="Age">
+                </div>
+
+                <!-- <p id="p2">FORGOT PASSWORD</p> -->
+                <input id="button" type="submit" value="VERIFY">
+                <p id="p3">Already have an account ? <strong><a href="Login.html" target="_blank"> SIGN IN </a></strong>
+                </p>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+
+
+
+<!-- <div class="input-container">
+    <i class="fa fa-envelope icon"></i>
+    <input class="input-field" type="text" placeholder="Email" name="email">
+</div> -->

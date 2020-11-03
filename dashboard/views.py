@@ -1,11 +1,16 @@
 from django.shortcuts import render
+from django.contrib import sessions
 
 # Create your views here.
 def mech_dashboard(request):
 	return render(request,'dashboard/mech.html')
 
 def user_dashboard(request):
-	return render(request,'dashboard/user.html')
+	user={'email': 'jaffa@iiits.in',
+		'fname': "jaffa",
+		'lname': "jaffas",
+		'username': "jaffa1234"}
+	return render(request,'dashboard/user.html',user)
 
 def employee_dashboard(request):
 	return render(request,'dashboard/emp.html')
