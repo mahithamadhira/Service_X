@@ -58,7 +58,7 @@ def signup(request):
                     'password' : 'false',
                     }
                 )
-                return redirect('home')
+                return redirect('user_dashboard')
             else:
                 messages.success(request, 'The email ID is already registerd')
         else:
