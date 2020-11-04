@@ -3,6 +3,8 @@ import boto3
 from boto3.dynamodb.conditions import Key, Attr
 
 # Create your views here.
+def home(request):
+    return render(request,'home/home.html')
 def home_view(request):
 	dynamodb = boto3.resource('dynamodb')
 	table = dynamodb.Table('User')
