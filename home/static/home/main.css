@@ -3,6 +3,9 @@
    padding: 0;
    box-sizing: border-box;
 }
+.regis{
+  display: flex;
+}
 .carousel-inner > carousel-item > carousel-control-next > btn{
   display: flex;
   align-items: center;
