@@ -6,13 +6,23 @@
 <h1>User dashboard this</h1>
 
 <div class="container shadow p-3 mb-5">
-    <h5> Car taken </h5>
-    <h6>User name: {{ username }}</h6>
-    <p>E-mail: {{ event.Venue }}</p>
-    <p>First name: {{ event.duration }}</p>
-    <p>Last name: {{ event.guest }}</p>
-    <p>Team size: {{ event.team_size }}</p>
-    <p>Day number: {{ event.day_number }}</p>
-    <p>{{ event.description }}</p>
+    <form method="POST" action="{% url 'user_dashboard' %}">
+        {% csrf_token %}
+        <input class="signup" type="text" name="fname" placeholder="First name" value="{{ fname }}">
+        <input class="signup" type="text" name="lname" placeholder="Last name" value="{{ lname }}">
+        <input class="signup" type="text" name="username" placeholder="Username" value = "{{ username }}">
+        <input class="signup" type="text" name="gender" placeholder="Gender" value="{{ gender }}">
+        <input class="signup" type="number" name="age" placeholder="Age" value = "{{ age }}">
+        <input class="signup" type="text" name="email" placeholder="Email" value = "{{ email_id }}" disabled>
+        <input class="signup" type="text" name="is_admin" placeholder="is_admin" value = "{{ is_admin }}">
+        <input class="signup" type="text" name="is_staff" placeholder="is_staff" value = "{{ is_staff }}">
+        <input class="signup" type="text" name="is_verified" placeholder="is_verified" value = "{{ is_verified }}" disabled>
+        <input class="signup" type="number" name="contact" placeholder="contact number" value = "{{ contact }}">
+        <input class="signup" type="text" name="dLicense" placeholder="License number" value = "{{ dLicense }}">   
+        
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <input class="btn login_btn" type="submit" value="Register Account">
+          </div>
+    </form>
  </div>
 {% endblock content %}

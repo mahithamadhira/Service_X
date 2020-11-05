@@ -55,9 +55,23 @@ def signup(request):
                     'is_admin':'false',
                     'is_staff':'false',
                     'is_verified':'false',
-                    'password' : 'false',
                     }
                 )
+                response = table.scan(
+                    FilterExpression=Attr('email_id').eq(email_id)
+                )
+                request.session['email_id']=response['Items'][0]['email_id']
+                request.session['password']=response['Items'][0]['password']
+                request.session['fname']=response['Items'][0]['fname']
+                request.session['lname']=response['Items'][0]['lname']
+                request.session['username']=response['Items'][0]['username']
+                request.session['age']=response['Items'][0]['age']
+                request.session['gender']=response['Items'][0]['gender']
+                request.session['is_admin'] = response['Items'][0]['is_admin']
+                request.session['is_staff'] = response['Items'][0]['is_staff']
+                request.session['is_verified'] = response['Items'][0]['is_verified']
+                request.session['contact'] = response['Items'][0]['contact']
+                request.session['dLicense'] = response['Items'][0]['dLicense']
                 return redirect('user_dashboard')
             else:
                 messages.success(request, 'The email ID is already registerd')
