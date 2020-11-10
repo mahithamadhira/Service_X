@@ -1,7 +1,23 @@
-{% extends 'dashboard/base_dash.html' %}
+{% extends 'dashboard/index.html' %}
 
 {% load static %}
 
 {% block content %}
 <h1>Mechanic dashboard this</h1>
+
+<form method="POST" action="{% url 'mech_dashboard' %}">
+    {% csrf_token %}
+    <input class="signup" type="number" name="contact" placeholder="Contact" value="{{ contact }}" disabled>
+    <input class="signup" type="text" name="co_ordinates" placeholder="Co-ordinates" value="{{ co_ordinates }}">
+    <input class="signup" type="number" name="service_charge" placeholder="Service charge" value="{{ service_charge }}">
+    <input class="signup" type="number" name="earnings" placeholder="Earnings" value = "{{ earnings }}" disabled>
+    <input class="signup" type="text" name="is_available" placeholder="Are you available?" value="{{ is_available }}">
+    <input class="signup" type="text" name="is_verified" placeholder="Verified" value = "{{ is_verified }}" disabled>
+    <input class="signup" type="text" name="email" placeholder="Email" value = "{{ email_id }}" disabled>
+    <input class="signup" type="number" name="rating" placeholder="Rating" value = "{{ rating }}" disabled> 
+    
+    <div class="d-flex justify-content-center mt-3 login_container">
+      <input class="btn bth-primary btn-submit login_btn" type="submit" value="Update">
+      </div>
+</form>
 {% endblock content %}

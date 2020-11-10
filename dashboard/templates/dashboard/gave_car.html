@@ -1,0 +1,27 @@
+{% extends 'dashboard/index.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<h1>Gave cars page le</h1>
+<div class="container shadow p-3 mb-5">
+    <form method="POST" action="{% url 'user_gib' %}">
+        {% csrf_token %}
+        <input class="signup" type="text" name="car_name" placeholder="car_name" value="{{ car_name }}">
+        <input class="signup" type="number" name="car_model" placeholder="car_model" value="{{ car_model }}">
+        <input class="signup" type="text" name="car_number" placeholder="car_number" value = "{{ car_number }}">
+        <input class="signup" type="text" name="co_ordinates" placeholder="co_ordinates" value="{{ co_ordinates }}">
+        <input class="signup" type="text" name="email" placeholder="Email" value = "{{ email_id }}" disabled>
+        <input class="signup" type="text" name="is_available" placeholder="is_available" value = "{{ is_available }}">
+        <input class="signup" type="text" name="is_verified" placeholder="is_verified" value = "{{ is_verified }}" disabled>
+        <!-- <input class="signup" type="number" name="rating" placeholder="rating" value = "{{ rating }}" disabled>
+        <input class="signup" type="number" name="earnings" placeholder="Earnings" value = "{{ earnings }}" disabled> -->
+        <input class="signup" type="number" name="cost_perday" placeholder="cost_perday" value = "{{ cost_perday }}">   
+        
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <input class="btn login_btn" type="submit" value="Register Account">
+          </div>
+    </form>
+ </div>
+{% endblock content %}

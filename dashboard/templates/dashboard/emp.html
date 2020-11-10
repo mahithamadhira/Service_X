@@ -1,7 +1,29 @@
-{% extends 'dashboard/base_dash.html' %}
+{% extends 'dashboard/index.html' %}
 
 {% load static %}
 
 {% block content %}
 <h1>Employee dashboard this</h1>
+
+    <input class="signup" type="text" name="email_id" placeholder="Email" value="{{ email_id }}" disabled>
+    <input class="signup" type="number" name="contact" placeholder="Contact" value="{{ contact }}" disabled>
+    <input class="signup" type="number" name="verified_count" placeholder="Verified_count" value = "{{ verified_count }}" disabled>
+    <input class="signup" type="text" name="earnings" placeholder="Earnings" value="{{ earnings }}" disabled>    
+  
+    {% for i in Cars %}
+    <form method="POST" action="{% url 'emp_dashboard' %}">
+    {% csrf_token %}
+    <p style = "margin-left: 50px">{{ i.car_model }}</p>
+    <p style = "margin-left: 50px">{{ i.car_name }}</p>
+    <p style = "margin-left: 50px">{{ i.car_number }}</p>
+    <p style = "margin-left: 50px">{{ i.co_ordinates }}</p>
+    <p style = "margin-left: 50px">{{ i.email_id }}</p>
+    <div class="d-flex justify-content-center mt-3 login_container">
+        <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+        <input class="btn bth-primary btn-submit login_btn" type="submit" value="Yes">
+      </div>
+      </form>
+    {% endfor %}
+
 {% endblock content %}
+
