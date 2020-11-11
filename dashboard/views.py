@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.contrib import sessions
 import boto3
@@ -469,3 +470,11 @@ def employee_dashboard(request):
 		dic['Mechanics'] = Mechanics
 		return render(request, 'dashboard/emp.html',dic)
 	return redirect('user_dashboard')
+=======
+from django.shortcuts import render
+from django.http import HttpResponse
+# Create your views here.
+def dashboard(request):
+    context=('a'':''a')
+    return render(request, 'index.html')
+>>>>>>> master
