@@ -1,0 +1,21 @@
+{% extends 'home/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<h1>CAR DETAILS</h1>
+
+    <form method="POST" action="#">
+    {% csrf_token %}
+    <p style = "margin-left: 50px">{{ car_model }}</p>
+    <p style = "margin-left: 50px">{{ car_name }}</p>
+    <p style = "margin-left: 50px">{{ car_number }}</p>
+    <p style = "margin-left: 50px">{{ co_ordinates }}</p>
+    <p style = "margin-left: 50px">{{ email_id }}</p>
+    <div class="d-flex justify-content-center mt-3 login_container">
+        <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+        <input class="btn bth-primary btn-submit login_btn" type="submit" value="book this car">
+      </div>
+    </form>
+
+{% endblock content %}

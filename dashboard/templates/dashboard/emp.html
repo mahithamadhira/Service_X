@@ -8,8 +8,8 @@
     <input class="signup" type="text" name="email_id" placeholder="Email" value="{{ email_id }}" disabled>
     <input class="signup" type="number" name="contact" placeholder="Contact" value="{{ contact }}" disabled>
     <input class="signup" type="number" name="verified_count" placeholder="Verified_count" value = "{{ verified_count }}" disabled>
-    <input class="signup" type="text" name="earnings" placeholder="Earnings" value="{{ earnings }}" disabled>    
-  
+    <input class="signup" type="text" name="earnings" placeholder="Earnings" value="{{ earnings }}" disabled>
+<h1>CARS</h1>
     {% for i in Cars %}
     <form method="POST" action="{% url 'emp_dashboard' %}">
     {% csrf_token %}
@@ -20,10 +20,25 @@
     <p style = "margin-left: 50px">{{ i.email_id }}</p>
     <div class="d-flex justify-content-center mt-3 login_container">
         <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+        <input type="text" id="type" name="type" value="cars" hidden>
         <input class="btn bth-primary btn-submit login_btn" type="submit" value="Yes">
-      </div>
-      </form>
+    </div>
+  </form>
+    {% endfor %}
+
+    <h1>MECHANICS</h1>
+    {% for i in Mechanics %}
+    <form method="POST" action="{% url 'emp_dashboard' %}">
+    {% csrf_token %}
+    <p style = "margin-left: 50px">{{ i.co_ordinates }}</p>
+    <p style = "margin-left: 50px">{{ i.email_id }}</p>
+    <p style = "margin-left: 50px">{{ i.service_charge }}</p>
+    <div class="d-flex justify-content-center mt-3 login_container">
+        <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+        <input type="text" id="type" name="type" value="mechanics" hidden>
+        <input class="btn bth-primary btn-submit login_btn" type="submit" value="Yes">
+    </div>
+  </form>
     {% endfor %}
 
 {% endblock content %}
-

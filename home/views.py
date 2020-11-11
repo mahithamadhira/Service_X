@@ -51,7 +51,121 @@ def home_view(request):
 	try:
 		request.session['email_id']
 		print(request.session['email_id'])
+
+		dic = {}
+		dynamodb = boto3.resource('dynamodb')
+		table = dynamodb.Table('Car')
+		response = table.scan()
+		lat = []
+		long = []
+		emails = []
+		names=[]
+		for j in response['Items']:
+			temp=0
+			lat1 = ""
+			long1 = ""
+			if j['co_ordinates'] != '-':
+				for i in j['co_ordinates'][1:-1]:
+					if i==',':
+						temp=1
+					elif temp==0:
+						lat1+=i
+					else:
+						long1+=i
+				print(lat1)
+				print(type(lat1))
+				print(long1)
+				print(type(long1))
+				lat1 = float(lat1)
+				long1 = float(long1)
+				lat.append(lat1)
+				long.append(long1)
+				names.append(j['car_name'])
+				emails.append(j['email_id'])
+		print(lat)
+		print(type(lat))
+		dic['lat'] = lat
+		dic['long'] = long
+		dic['names'] = names
+		dic['emails'] = emails
+
 	except:
-		return render(request, 'home/home.html')
+		dic = {}
+		dynamodb = boto3.resource('dynamodb')
+		table = dynamodb.Table('Car')
+		response = table.scan()
+		lat = []
+		long = []
+		emails = []
+		names=[]
+		for j in response['Items']:
+			temp=0
+			lat1 = ""
+			long1 = ""
+			if j['co_ordinates'] != '-':
+				for i in j['co_ordinates'][1:-1]:
+					if i==',':
+						temp=1
+					elif temp==0:
+						lat1+=i
+					else:
+						long1+=i
+				print(lat1)
+				print(type(lat1))
+				print(long1)
+				print(type(long1))
+				lat1 = float(lat1)
+				long1 = float(long1)
+				lat.append(lat1)
+				long.append(long1)
+				names.append(j['car_name'])
+				emails.append(j['email_id'])
+
+		print(lat)
+		print(type(lat))
+		dic['lat'] = lat
+		dic['long'] = long
+		dic['names'] = names
+		dic['emails'] = emails
+
+		return render(request, 'home/home.html', dic)
+
 	finally:
-		return render(request, 'home/home.html')
+		dic = {}
+		dynamodb = boto3.resource('dynamodb')
+		table = dynamodb.Table('Car')
+		response = table.scan()
+		lat = []
+		long = []
+		emails = []
+		names=[]
+		for j in response['Items']:
+			temp=0
+			lat1 = ""
+			long1 = ""
+			if j['co_ordinates'] != '-':
+				for i in j['co_ordinates'][1:-1]:
+					if i==',':
+						temp=1
+					elif temp==0:
+						lat1+=i
+					else:
+						long1+=i
+				print(lat1)
+				print(type(lat1))
+				print(long1)
+				print(type(long1))
+				lat1 = float(lat1)
+				long1 = float(long1)
+				lat.append(lat1)
+				long.append(long1)
+				names.append(j['car_name'])
+				emails.append(j['email_id'])
+
+		print(lat)
+		print(type(lat))
+		dic['lat'] = lat
+		dic['long'] = long
+		dic['names'] = names
+		dic['emails'] = emails
+		return render(request, 'home/home.html',dic)

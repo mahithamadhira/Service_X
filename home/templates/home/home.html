@@ -40,8 +40,105 @@
             </a>
           </div>
         </div>
+
+
+        	<!-- Main Content -->
+	<div class="container">
+		<div class="row">
+			<p style="font-family: Josefin Sans;font-size:45px">These are all the cars available you:</p>
+		</div>
+
+		<!-- Google Maps API -->
+		 <div id="map" style="height: 600px">&nbsp;</div>
+
+    <script>
+      // In the following example, markers appear when the user clicks on the map.
+      // The markers are stored in an array.
+      // The user can then click an option to hide, show or delete the markers.
+      var map;
+      var markers = [];
+      function initMap() {
+        var haightAshbury = {lat: 13.549318, lng: 79.994023};
+        var latitudes={{lat|safe}};
+        var longitudes={{long|safe}};
+        var shop_names={{names|safe}};
+        var emails = {{emails|safe}};
+        var doct= ["http://127.0.0.1:8000/car_details_of/"];
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: haightAshbury,
+          mapTypeId: 'terrain'
+        });
+				infoWindow = new google.maps.InfoWindow;
+				// Try HTML5 geolocation.
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(function(position) {
+						var pos = {
+							lat: position.coords.latitude,
+							lng: position.coords.longitude
+						};
+						infoWindow.open(map);
+						map.setCenter(pos);
+            var marker = new google.maps.Marker({
+          position: pos,
+          animation: google.maps.Animation.BOUNCE,
+          title: 'Current Location'
+        });
+          marker.setMap(map);
+					}, function() {
+						handleLocationError(true, infoWindow, map.getCenter());
+					});
+				} else {
+					// Browser doesn't support Geolocation
+					handleLocationError(false, infoWindow, map.getCenter());
+				}
+        var i, len, text;
+        for (i = 0, len = latitudes.length; i < len; i++) {
+          var latlng = {lat: latitudes[i],lng: longitudes[i]};
+          addMarker(latlng,doct[0],shop_names[i],emails[i]);
+        }
+      }
+			      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+			        infoWindow.setPosition(pos);
+			        infoWindow.setContent(browserHasGeolocation ?
+			                              'Error: The Geolocation service failed.' :
+			                              'Error: Your browser doesn\'t support geolocation.');
+			        infoWindow.open(map);
+			      }
+      // Adds a marker to the map and push to the array.
+      function addMarker(location,doct,name,email) {
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          title: name,
+        });
+        google.maps.event.addListener(marker,'click',function() {
+          window.open(doct+email,"_self");
+        });
+        markers.push(marker);
+      }
+      function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+      // Shows any markers currently in the array.
+      function showMarkers() {
+        setMapOnAll(map);
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMyd2ikeOMG1xokxmoEuzNLWAU4T6riaQ&callback=initMap">
+    </script>
+
+		<div class="row">
+		</div>
+	</div>
+
+
+
         <section id="About">
-            
+
             <div class="container cont">
               <div class="box">
                 <div class="thumb">
@@ -51,9 +148,9 @@
                   <h2>Venkatesh</h2>
                 </div>
               </div>
-              
-                  
-              
+
+
+
 
               <div class="box">
                 <div class="thumb">
@@ -62,7 +159,7 @@
                 <div class="text">
                 <h2>Mahita</h2>
               </div>
-              
+
               </div>
 
               <div class="box">
@@ -73,8 +170,8 @@
                 <h2>Rishabh</h2>
               </div>
               </div>
-              
-             
+
+
 
               <div class="box">
                 <div class="thumb">
@@ -83,7 +180,7 @@
                 <div class="text">
                   <h2>Rakesh</h2>
                 </div>
-              
+
               </div>
 
               <div class="box">
@@ -93,7 +190,7 @@
                 <div class="text">
                   <h2>Rithika</h2>
                 </div>
-              
+
               </div>
             </div>
         </div>

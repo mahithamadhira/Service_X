@@ -15,13 +15,34 @@ from django.contrib import messages
 #from .tokens import account_activation_token
 # from django.contrib.auth.decorators import login_required
 # from django.contrib.auth import logout
-<<<<<<< HEAD
 from decimal import *
-=======
->>>>>>> master
 from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
+
+def map(request):
+    dic = {}
+    dic['lat'] = [12.22222,13.3333333333333333333,14.333333332,132.312323]
+    dic['long'] = [21.22222,24.3333333333333333333,4.333333332,6.8232332]
+    dic['names'] = ['a','b','c','d']
+    return render(request,'register/map.html',dic)
+
+def get_loc(request):
+    dic = {}
+    dic['lat'] = 12.22
+    dic['long'] = 12.22
+    return render(request, 'register/get_loc.html',dic)
+
+
+def update_loc(request):
+    if request.method == "POST":
+        lat = request.POST.get('lat')
+        long = request.POST.get('long')
+        print(lat)
+        print(long)
+        print(type(lat))
+        return HttpResponse('<h1> hello </h1>')
+
 def signup(request):
     if request.method == 'POST':
         print('request')
@@ -32,11 +53,7 @@ def signup(request):
         password = request.POST.get('password')
         re_password = request.POST.get('re_password')
         gender = request.POST.get('gender')
-<<<<<<< HEAD
         age = int(request.POST.get('age'))
-=======
-        age = request.POST.get('age')
->>>>>>> master
         print(age)
         if(password==re_password):
             print('a')
@@ -60,7 +77,6 @@ def signup(request):
                     'gender': gender,
                     'contact': '-',
                     'dLicense':'-',
-<<<<<<< HEAD
                     'is_admin':False,
                     'is_staff':False,
                     'is_verified':False,
@@ -117,14 +133,6 @@ def signup(request):
                 print(type(request.session['is_verified']))
                 print(request.session['is_verified'])
                 print(type(request.session['rating']))
-=======
-                    'is_admin':'false',
-                    'is_staff':'false',
-                    'is_verified':'false',
-                    'password' : 'false',
-                    }
-                )
->>>>>>> master
                 return redirect('user_dashboard')
             else:
                 messages.success(request, 'The email ID is already registerd')
@@ -151,14 +159,11 @@ def login(request):
                 request.session['username']=response['Items'][0]['username']
                 request.session['age']=response['Items'][0]['age']
                 request.session['gender']=response['Items'][0]['gender']
-<<<<<<< HEAD
                 request.session['is_admin'] = response['Items'][0]['is_admin']
                 request.session['is_staff'] = response['Items'][0]['is_staff']
                 request.session['is_verified'] = response['Items'][0]['is_verified']
                 request.session['contact'] = response['Items'][0]['contact']
                 request.session['dLicense'] = response['Items'][0]['dLicense']
-=======
->>>>>>> master
                 #print(request.session['email_id'])
                 return redirect('home')
             else:
@@ -176,7 +181,3 @@ def logout(request):
         return redirect('home')
     except:
         return redirect('home')
-<<<<<<< HEAD
-=======
-
->>>>>>> master

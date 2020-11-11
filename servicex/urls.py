@@ -14,20 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from home import views as v
-<<<<<<< HEAD
 from dashboard import views as dv
-=======
-from dashboard import views 
->>>>>>> master
 from register import views as regv
 
 #app_name = 'servicex'
 
 urlpatterns = [
 	path('',v.home_view, name="home"),
-<<<<<<< HEAD
 	path('dashboard/',dv.user_dashboard, name="user_dashboard"),
 	path('dashboard/mechanic/',dv.mech_dashboard, name="mech_dashboard"),
 	path('dashboard/employee/',dv.employee_dashboard, name="emp_dashboard"),
@@ -35,14 +30,13 @@ urlpatterns = [
 	path('dashboard/employee/earnings/',dv.employee_earnings, name="emp_earns"),
 	path('dashboard/took_lease/',dv.user_took,name="user_took"),
     path('dashboard/gave_lease/',dv.user_gib,name="user_gib"),
-=======
->>>>>>> master
     path('admin/', admin.site.urls),
     path('register/', regv.signup, name="signup"),
     path('login/',regv.login, name="login"),
     path('logout/',regv.logout, name="logout"),
-<<<<<<< HEAD
-=======
-    path('',include('dashboard.urls')),
->>>>>>> master
+    path('map/',regv.map, name="map"),
+    path('get_loc/',regv.get_loc, name="get_loc"),
+    path('update_loc/',regv.update_loc,name="update_loc"),
+    path('car_details_of/<str:email>/',dv.car_details,name="car_details"),
+
 ]

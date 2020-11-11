@@ -3,6 +3,8 @@
 {% load static %}
 
 {% block content %}
+<h1>User dashboard this</h1>
+
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -12,142 +14,56 @@
     {% endfor %}
 </ul>
 {% endif %}
-<style>
-      body,
-		html {
-            background-image: url('https://sanantoniosports.org/wp-content/uploads/2017/04/blue-abstract-background.jpg');
-            <!-- background-image: url('http://clipart-library.com/img/1986135.jpg'); -->
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-			margin: 0;
-			padding: 0;
-			height: 100%;
-		}
-		.user_card {
-            opacity: 0.70;
-            height: 550px;
-			width: 500px;
-			margin-top: 170px;
-			margin-bottom: auto;
-			background: #2d7eda;
-			position: relative;
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
-			padding: 10px;
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			border-radius: 5px;
 
-		}
+<div class="container shadow p-3 mb-5">
+    <form method="POST" action="{% url 'user_dashboard' %}">
+        {% csrf_token %}
+        <label for="first name"> First name</label>
+            <input class="signup" type="text" name="fname" placeholder="First name" value="{{ fname }}">
+        
+        <br>
+        <label for="last name">Last name</label>
+            <input class="signup" type="text" name="lname" placeholder="Last name" value="{{ lname }}">
+        
+        <br>
+        <label for="Username">Username</label>
+            <input class="signup" type="text" name="username" placeholder="Username" value = "{{ username }}">
 
-		.form_container {
-			margin-top: 20px;
-		}
-
-		#form-title{
-			color: #fff;
-
-		}
-
-		.login_btn {
-			width: 100%;
-			background:#05057a !important;
-			color: white !important;
-		}
-		.login_btn:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
-		}
-		.login_container {
-			padding: 0 2rem;
-		}
-		.input-group-text {
-			background: #395588 !important;
-			color: white !important;
-			border: 0 !important;
-			border-radius: 0.25rem 0 0 0.25rem !important;
-		}
-		.input_user,
-		.input_pass:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
-		}
-  
-		#messages{
-			background-color: grey;
-			color: #fff;
-			padding: 10px;
-			margin-top: 10px;
-        }
-        .name{
-            padding-left: 100px;
-        }
-        .first{
-            border-radius: 4%;
-            font-size: large;
-            color:black;
-            font-weight: 900;
-        }
-        .butn{
-            margin-top: 40px;
-            height: 40px;
-        }
-</style>
-    <div class="first">
-       <div class="container contr h-100">
-            <div class="d-flex justify-content-center h-100">
-                <div class="user_card">
-                    <div class="d-flex justify-content-center">
-                        <form method="POST" action="{% url 'user_dashboard' %}">
-                            {% csrf_token %}
-                                <table class="tab" > 
-                                <tr>
-                                <td>
-                                <label for="first">First name</label>
-                                <td>
-                                <input class="signup" type="text"  name="fname" placeholder="First name" value="{{ fname }}">
-                                </td>
-                                </tr>
-                                <tr><td>
-                                <label for="last name">Last name</label><td>
-                                <input class="signup" type="text" name="lname" placeholder="Last name" value="{{ lname }}"></td></tr>
-                                <tr><td>
-                                <label for="Username">Username</label><td>
-                                <input class="signup" type="text" name="username" placeholder="Username" value = "{{ username }}"></td></tr>
-                                <tr><td>
-                                <label for="Gender">Gender</label><td>
-                                <input class="signup" type="text" name="gender" placeholder="Gender" value="{{ gender }}"></td></tr>
-                                <tr><td>
-                                <label for="Age">Age</label><td>
-                                <input class="signup" type="number" name="age" placeholder="Age" value = "{{ age }}"></td></tr>
-                                <tr><td>
-                                <label for="Email">Email </label><td>
-                                <input class="signup" type="text" name="email" placeholder="Email" value = "{{ email_id }}" disabled></td></tr>
-                                <tr><td>
-                                <label for="Employee">Employee</label><td>
-                                <input class="signup" type="text" name="is_admin" placeholder="is_admin" value = "{{ is_admin }}"></td></tr>
-                                <tr><td>
-                                <label for="Mechanic">Mechanic</label><td>
-                                <input class="signup" type="text" name="is_staff" placeholder="is_staff" value = "{{ is_staff }}"></td></tr>
-                                <tr><td>
-                                <label for="Verified">Verified</label><td>
-                                <input class="signup" type="text" name="is_verified" placeholder="is_verified" value = "{{ is_verified }}" disabled></td></tr>
-                                <tr><td>
-                                <label for="Contact no.">Contact no. </label><td>
-                                <input class="signup" type="number" name="contact" placeholder="contact number" value = "{{ contact }}"></td></tr>
-                                <tr><td>
-                                <label for="License"> License number</label><td>
-                                <input class="signup" type="text" name="dLicense" placeholder="License number" value = "{{ dLicense }}"></td></tr>
-                                <tr><td colspan="2">  
-                                 <input class="butn bth-primary btn-submit login_btn" type="submit" value="Register Account">
-                            </table>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <br>
+        <label for="Gender">Gender</label>
+            <input class="signup" type="text" name="gender" placeholder="Gender" value="{{ gender }}">
+        
+        <br>
+        <label for="Age">   Age    </label>
+            <input class="signup" type="number" name="age" placeholder="Age" value = "{{ age }}">
+ 
+        <br>
+        <label for="Email">Email </label>
+            <input class="signup" type="text" name="email" placeholder="Email" value = "{{ email_id }}" disabled>
+       
+        <br>
+        <label for="Employee">Employee</label>
+            <input class="signup" type="text" name="is_admin" placeholder="is_admin" value = "{{ is_admin }}">
+        
+        <br>
+        <label for="Mechanic">Mechanic</label>
+            <input class="signup" type="text" name="is_staff" placeholder="is_staff" value = "{{ is_staff }}">
+        
+        <br>
+        <label for="Verified">Verified</label>
+            <input class="signup" type="text" name="is_verified" placeholder="is_verified" value = "{{ is_verified }}" disabled>
+        
+        <br>
+        <label for="Contact no.">Contact no. </label>
+            <input class="signup" type="number" name="contact" placeholder="contact number" value = "{{ contact }}">
+        
+        <br>
+        <label for="License"> License number</label>
+            <input class="signup" type="text" name="dLicense" placeholder="License number" value = "{{ dLicense }}">
+        <br>       
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <input class="btn bth-primary btn-submit login_btn" type="submit" value="Register Account">
+          </div>
+    </form>
+ </div>
 {% endblock content %}

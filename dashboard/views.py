@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.shortcuts import render, redirect
 from django.contrib import sessions
 import boto3
@@ -207,9 +206,17 @@ def user_gib(request):
 		car_number = request.POST.get('car_number')
 		email_id = request.session['email_id']
 		car_model = request.POST.get('car_model')
-		co_ordinates = request.POST.get('co_ordinates')
+		# co_ordinates = request.POST.get('co_ordinates')
 		cost_perday = int(request.POST.get('cost_perday'))
 		is_available = request.POST.get('is_available')
+		lat = request.POST.get('lat')
+		long = request.POST.get('long')
+		co_ordinates = '['
+		co_ordinates+=lat
+		co_ordinates+=','
+		co_ordinates+=long
+		co_ordinates+=']'
+		print(co_ordinates)
 		#is_verified = request.POST.get('is_verified')
 		#rating = int(request.POST.get('rating'))
 		#earnings = int(request.POST.get('earnings'))
@@ -262,12 +269,31 @@ def user_gib(request):
 		)
 
 		print('table scan')
-		print(response['Items'])
+		print(response['Items'][0]['co_ordinates'])
+		print(type(response['Items'][0]['co_ordinates']))
+		print(response['Items'][0]['co_ordinates'][0])
+		lat = ""
+		long = ""
+		temp=0
+		for i in response['Items'][0]['co_ordinates'][1:-1]:
+			if i==',':
+				temp=1
+			elif temp==0:
+				lat+=i
+			else:
+				long+=i
+
 		dic['email_id'] = email_id
 		dic['car_name'] = response['Items'][0]['car_name']
 		dic['car_number'] = response['Items'][0]['car_number']
 		dic['car_model'] = response['Items'][0]['car_model']
 		dic['co_ordinates'] = response['Items'][0]['co_ordinates']
+
+		dic['lat'] = float(lat)
+		dic['long'] = float(long)
+
+		print(dic['lat'])
+
 		dic['cost_perday'] = response['Items'][0]['cost_perday']
 		dic['is_available'] =  response['Items'][0]['is_available']
 		dic['is_verified'] =  response['Items'][0]['is_verified']
@@ -316,6 +342,27 @@ def user_gib(request):
 		dic['car_number'] = response['Items'][0]['car_number']
 		dic['car_model'] = response['Items'][0]['car_model']
 		dic['co_ordinates'] = response['Items'][0]['co_ordinates']
+
+		lat = ""
+		long = ""
+		temp=0
+		if response['Items'][0]['co_ordinates']!='-':
+			for i in response['Items'][0]['co_ordinates'][1:-1]:
+				if i==',':
+					temp=1
+				elif temp==0:
+					lat+=i
+				else:
+					long+=i
+		else:
+			lat="17.18"
+			long="87.14"
+		print(lat)
+		print(type(lat))
+		dic['lat'] = float(lat)
+		dic['long'] = float(long)
+
+		print(dic['lat'])
 		dic['cost_perday'] = response['Items'][0]['cost_perday']
 		dic['is_available'] =  response['Items'][0]['is_available']
 		dic['is_verified'] =  response['Items'][0]['is_verified']
@@ -334,7 +381,13 @@ def mech_dashboard(request):
 			is_available = request.POST.get('is_available')
 			#is_verified = request.session['is_verified']
 			#rating = request.session['rating']
-
+			lat = request.POST.get('lat')
+			long = request.POST.get('long')
+			co_ordinates = '['
+			co_ordinates+=lat
+			co_ordinates+=','
+			co_ordinates+=long
+			co_ordinates+=']'
 			if(is_available == 'true'):
 				is_available = 'True'
 			else:
@@ -362,6 +415,22 @@ def mech_dashboard(request):
 				FilterExpression=Attr('email_id').eq(email_id)
 			)
 			print('scanning')
+			lat = ""
+			long = ""
+			temp=0
+			for i in response['Items'][0]['co_ordinates'][1:-1]:
+				if i==',':
+					temp=1
+				elif temp==0:
+					lat+=i
+				else:
+					long+=i
+			print(lat)
+			print(type(lat))
+			dic['lat'] = float(lat)
+			dic['long'] = float(long)
+
+			print(dic['lat'])
 			dic['email_id'] = response['Items'][0]['email_id']
 			dic['contact'] = request.session['contact']
 			dic['co_ordinates'] = response['Items'][0]['co_ordinates']
@@ -380,6 +449,26 @@ def mech_dashboard(request):
 			response = table.scan(
 				FilterExpression=Attr('email_id').eq(email_id)
 			)
+			lat = ""
+			long = ""
+			temp=0
+			if response['Items'][0]['co_ordinates']!='-':
+				for i in response['Items'][0]['co_ordinates'][1:-1]:
+					if i==',':
+						temp=1
+					elif temp==0:
+						lat+=i
+					else:
+						long+=i
+			else:
+				lat="17.18"
+				long="87.14"
+			print(lat)
+			print(type(lat))
+			dic['lat'] = float(lat)
+			dic['long'] = float(long)
+
+			print(dic['lat'])
 			dic['email_id'] = response['Items'][0]['email_id']
 			dic['contact'] = request.session['contact']
 			dic['co_ordinates'] = response['Items'][0]['co_ordinates']
@@ -396,38 +485,74 @@ def employee_dashboard(request):
 	if request.session['is_admin'] ==True :
 		if request.method == 'POST':
 			email = request.POST.get('email_id')
+			typ = request.POST.get('type')
 			is_verified = True
-			dynamodb = boto3.resource('dynamodb')
-			table = dynamodb.Table('Car')
-			response = table.update_item(
-				Key={
-					'email_id': email,
-				},
-				UpdateExpression="set is_verified =:is_verified",
-				ExpressionAttributeValues={
-					':is_verified':is_verified,
-				},
-				ReturnValues="UPDATED_NEW"
-			)
+			if(typ == 'cars'):
+				dynamodb = boto3.resource('dynamodb')
+				table = dynamodb.Table('Car')
+				response = table.update_item(
+					Key={
+						'email_id': email,
+					},
+					UpdateExpression="set is_verified =:is_verified",
+					ExpressionAttributeValues={
+						':is_verified':is_verified,
+					},
+					ReturnValues="UPDATED_NEW"
+				)
 
-			email_id = request.session['email_id']
-			earnings = request.session['earnings_emp']
-			earnings = earnings + 1000
+				email_id = request.session['email_id']
+				earnings = request.session['earnings_emp']
+				print('============kars===================')
+				print(earnings)
+				earnings = earnings + 1000
+				print(earnings)
 
-			table = dynamodb.Table('Employee')
-			response = table.update_item(
-				Key={
-					'email_id': email_id,
-				},
-				UpdateExpression="set earnings =:earnings",
-				ExpressionAttributeValues={
-					':earnings':earnings,
-				},
-				ReturnValues="UPDATED_NEW"
-			)
+				table = dynamodb.Table('Employee')
+				response = table.update_item(
+					Key={
+						'email_id': email_id,
+					},
+					UpdateExpression="set earnings =:earnings",
+					ExpressionAttributeValues={
+						':earnings':earnings,
+					},
+					ReturnValues="UPDATED_NEW"
+				)
+				request.session['earnings_emp'] = earnings
+			if(typ == 'mechanics'):
+				dynamodb = boto3.resource('dynamodb')
+				table = dynamodb.Table('Mechanic')
+				response = table.update_item(
+					Key={
+						'email_id': email,
+					},
+					UpdateExpression="set is_verified =:is_verified",
+					ExpressionAttributeValues={
+						':is_verified':is_verified,
+					},
+					ReturnValues="UPDATED_NEW"
+				)
 
+				email_id = request.session['email_id']
+				earnings = request.session['earnings_emp']
+				print('============mechanichu===================')
+				print(earnings)
+				earnings = earnings + 1500
+				print(earnings)
 
-
+				table = dynamodb.Table('Employee')
+				response = table.update_item(
+					Key={
+						'email_id': email_id,
+					},
+					UpdateExpression="set earnings =:earnings",
+					ExpressionAttributeValues={
+						':earnings':earnings,
+					},
+					ReturnValues="UPDATED_NEW"
+				)
+				request.session['earnings_emp'] = earnings
 		email_id = request.session['email_id']
 		dynamodb = boto3.resource('dynamodb')
 		table = dynamodb.Table('Employee')
@@ -470,11 +595,49 @@ def employee_dashboard(request):
 		dic['Mechanics'] = Mechanics
 		return render(request, 'dashboard/emp.html',dic)
 	return redirect('user_dashboard')
-=======
-from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
-def dashboard(request):
-    context=('a'':''a')
-    return render(request, 'index.html')
->>>>>>> master
+
+
+def car_details(request, email):
+	print(email)
+	dic = {}
+	dynamodb = boto3.resource('dynamodb')
+	table = dynamodb.Table('Car')
+	response = table.scan(
+		FilterExpression=Attr('email_id').eq(email)
+	)
+
+	print('table scan')
+	print(response['Items'][0]['co_ordinates'])
+	print(type(response['Items'][0]['co_ordinates']))
+	print(response['Items'][0]['co_ordinates'][0])
+	lat = ""
+	long = ""
+	temp=0
+	for i in response['Items'][0]['co_ordinates'][1:-1]:
+		if i==',':
+			temp=1
+		elif temp==0:
+			lat+=i
+		else:
+			long+=i
+
+	dic['email_id'] = email
+	dic['car_name'] = response['Items'][0]['car_name']
+	dic['car_number'] = response['Items'][0]['car_number']
+	dic['car_model'] = response['Items'][0]['car_model']
+	dic['co_ordinates'] = response['Items'][0]['co_ordinates']
+
+	dic['lat'] = float(lat)
+	dic['long'] = float(long)
+
+	print(dic['lat'])
+
+	dic['cost_perday'] = response['Items'][0]['cost_perday']
+	dic['is_available'] =  response['Items'][0]['is_available']
+	dic['is_verified'] =  response['Items'][0]['is_verified']
+	dic['rating'] =  response['Items'][0]['rating']
+	dic['earnings'] =  response['Items'][0]['earnings']
+
+	return render(request, 'dashboard/car_details.html',dic)
+
+	# return redirect('home')
