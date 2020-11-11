@@ -641,3 +641,22 @@ def car_details(request, email):
 	return render(request, 'dashboard/car_details.html',dic)
 
 	# return redirect('home')
+
+def checkout_view(request):
+	try:
+		request.session['email_id']
+	except:
+		#return render(request,'dashboard/checkout.html')
+		return redirect('login')
+	else:
+		#return redirect('login')
+		email_id = request.POST.get('email_id')
+		cost_perday = request.POST.get('cost_perday')
+		print(email_id)
+		print("----------------------")
+		dic={}
+		dic['email_id'] = email_id
+		dic['cost_perday'] = cost_perday
+		return render(request,'dashboard/checkout.html',dic)
+
+	
