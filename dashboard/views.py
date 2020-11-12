@@ -520,6 +520,31 @@ def employee_dashboard(request):
 					ReturnValues="UPDATED_NEW"
 				)
 				request.session['earnings_emp'] = earnings
+
+
+				table = dynamodb.Table('verifications')
+				response = table.scan()
+				sr = 0
+				if(len(response['Items'])==0):
+					sr = 1
+				else:
+					temp = 0
+					for i in response['Items']:
+						if temp<int(i['sr']):
+							temp = int(i['sr'])
+					sr = temp+1
+				print(sr)
+				response = table.put_item(
+					Item = {
+						'sr': sr,
+						'employee_email':email_id,
+						'checked_email':email,
+						'type_of': typ,
+					}
+				)
+
+
+
 			if(typ == 'mechanics'):
 				dynamodb = boto3.resource('dynamodb')
 				table = dynamodb.Table('Mechanic')
@@ -553,6 +578,31 @@ def employee_dashboard(request):
 					ReturnValues="UPDATED_NEW"
 				)
 				request.session['earnings_emp'] = earnings
+
+				table = dynamodb.Table('verifications')
+				response = table.scan()
+				sr = 0
+				if(len(response['Items'])==0):
+					sr = 1
+				else:
+					temp = 0
+					for i in response['Items']:
+						if temp<int(i['sr']):
+							temp = int(i['sr'])
+					sr = temp+1
+				print(sr)
+				response = table.put_item(
+					Item = {
+						'sr': sr,
+						'employee_email':email_id,
+						'checked_email':email,
+						'type_of': typ,
+					}
+				)
+
+
+
+
 		email_id = request.session['email_id']
 		dynamodb = boto3.resource('dynamodb')
 		table = dynamodb.Table('Employee')
@@ -622,8 +672,12 @@ def car_details(request, email):
 			long+=i
 
 	dic['email_id'] = email
+	request.session['owner_email'] = email
 	dic['car_name'] = response['Items'][0]['car_name']
 	dic['car_number'] = response['Items'][0]['car_number']
+	request.session['owner_car_number'] = dic['car_number']
+	request.session['owner_car_name'] = dic['car_name']
+
 	dic['car_model'] = response['Items'][0]['car_model']
 	dic['co_ordinates'] = response['Items'][0]['co_ordinates']
 
@@ -637,7 +691,7 @@ def car_details(request, email):
 	dic['is_verified'] =  response['Items'][0]['is_verified']
 	dic['rating'] =  response['Items'][0]['rating']
 	dic['earnings'] =  response['Items'][0]['earnings']
-
+	request.session['car_owner_earnings'] = int(response['Items'][0]['earnings'])
 	return render(request, 'dashboard/car_details.html',dic)
 
 	# return redirect('home')
@@ -650,7 +704,7 @@ def checkout_view(request):
 		return redirect('login')
 	else:
 		#return redirect('login')
-		email_id = request.POST.get('email_id')
+		email_id = request.session['owner_email']
 		cost_perday = request.POST.get('cost_perday')
 		print(email_id)
 		print("----------------------")
@@ -659,4 +713,62 @@ def checkout_view(request):
 		dic['cost_perday'] = cost_perday
 		return render(request,'dashboard/checkout.html',dic)
 
-	
+
+def success_payment(request,value,email):
+	try:
+		request.session['email_id']
+	except:
+		#return render(request,'dashboard/checkout.html')
+		return redirect('login')
+	else:
+		dic = {}
+		dynamodb = boto3.resource('dynamodb')
+		table = dynamodb.Table('Car')
+
+		print(value)
+		print("set aindi ra")
+		print(email)
+		if value=='yes':
+			response = table.scan(
+				FilterExpression=Attr('email_id').eq(email)
+			)
+			earnings = int(response['Items'][0]['earnings']) + int(response['Items'][0]['cost_perday'])
+			is_available = False
+			response = table.update_item(
+				Key={
+					'email_id': email,
+				},
+				UpdateExpression="set earnings = :earnings, is_available =:is_available",
+				ExpressionAttributeValues={
+					':earnings': earnings,
+					':is_available':is_available,
+				},
+				ReturnValues="UPDATED_NEW"
+			)
+			owner_email = email
+			buyer_email = request.session['email_id']
+			car_no = request.session['owner_car_number']
+			car_name = request.session['owner_car_name']
+			dynamodb = boto3.resource('dynamodb')
+			table = dynamodb.Table('bookings')
+			response = table.scan()
+			sr = 0
+			if(len(response['Items'])==0):
+				sr = 1
+			else:
+				temp = 0
+				for i in response['Items']:
+					if temp<int(i['sr']):
+						temp = int(i['sr'])
+				sr = temp+1
+			print(sr)
+			response = table.put_item(
+				Item = {
+					'sr': sr,
+					'owner_email':owner_email,
+					'buyer_email':buyer_email,
+					'car_number': car_no,
+					'car_name' : car_name,
+				}
+			)
+		return redirect('home')

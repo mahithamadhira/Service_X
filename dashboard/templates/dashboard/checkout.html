@@ -4,7 +4,10 @@
 <h1>Checkout</h1>
 <h2>{{ cost_perday }}</h2>
 <form method = "POST" action = "{% url 'home' %}">
-    <input type = text id = check name = check value = no hidden>
+    <input type = "text" id = "check" name = "check" value = "no" hidden>
+
+    <input type = "text" id = "email" name = "email" value = "{{email_id}}" hidden>
+
 </form>
 
 <!-- Set up a container element for the button -->
@@ -15,6 +18,7 @@
 <script>
     var total = '{{ cost_perday }}'
     // Render the PayPal button into #paypal-button-container
+    var temp = 0;
     paypal.Buttons({
 
         // Set up the transaction
@@ -28,15 +32,33 @@
             });
         },
 
+
         // Finalize the transaction
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
                 // Show a success message to the buyer
+                console.log('Hello there');
                 alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                document.getElementById('check').value = "yes";
+                var email = document.getElementById('email').value;
+                var doct= ["http://127.0.0.1:8000/success/"];
+                window.open(doct+"yes/"+email,"_self");
+
+                console.log('kummindi');
+                
             });
+            console.log('yeoo');
+
+
         }
 
 
     }).render('#paypal-button-container');
+
+    console.log('kasi');
+
+
+
+
 </script>
 {% endblock content %}

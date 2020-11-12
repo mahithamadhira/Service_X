@@ -39,6 +39,4 @@ urlpatterns = [
     path('update_loc/',regv.update_loc,name="update_loc"),
     path('car_details_of/<str:email>/',dv.car_details,name="car_details"),
     path('checkout/',dv.checkout_view, name = "checkout"),
-    path('success/<str:value>/<str:email>/',dv.success_payment, name = "success"),
-
 ]
