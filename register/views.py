@@ -157,7 +157,7 @@ def login(request):
                 request.session['fname']=response['Items'][0]['fname']
                 request.session['lname']=response['Items'][0]['lname']
                 request.session['username']=response['Items'][0]['username']
-                request.session['age']=response['Items'][0]['age']
+                request.session['age']=int(response['Items'][0]['age'])
                 request.session['gender']=response['Items'][0]['gender']
                 request.session['is_admin'] = response['Items'][0]['is_admin']
                 request.session['is_staff'] = response['Items'][0]['is_staff']

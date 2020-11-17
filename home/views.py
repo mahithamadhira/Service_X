@@ -133,7 +133,9 @@ def home_view(request):
 		# dic['names'] = names
 		# dic['emails'] = emails
 		#
-		return render(request, 'home/home.html', dic)
+		# return render(request, 'home/home.html', dic)
+
+		return render(request, 'home/home.html')
 	finally:
 		if 'email_id' in request.session:
 			dic = {}
@@ -177,4 +179,4 @@ def home_view(request):
 			dic['emails'] = emails
 			return render(request, 'home/home2.html',dic)
 		else:
-			return render(request,'home/home.html')
+			return render(request, 'home/home.html')
