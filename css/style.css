@@ -1,0 +1,249 @@
+/* resetting browser stuff */
+*     {
+  box-sizing: border-box;
+}
+html,
+body   {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-size: 16px;
+}
+* {
+  box-sizing:border-box;
+}
+body {
+  background:rgb(100, 108, 110);
+  font-family:"Raleway";
+}
+.form {
+  position:relative;
+  top:50%;
+  left:80%;
+  transform:translate(-50%,-50%);
+  width:300px;
+  background:#708b437e;
+  box-shadow:5px 5px 10px 5px #ccc;
+}
+.form .tab-header {
+  height:50px;
+  line-height:50px;
+}
+.form .tab-header > div {
+  width:50%;
+  float:right;
+  text-align:left;
+  background:#ddd;
+  color:#555;
+  cursor:pointer;
+}
+.form .tab-header > div.active {
+  background:#f5f5f5;
+  color:#111;
+}
+.form .tab-content {
+  padding:50px;
+}
+.form .tab-content .form-element {
+  margin:10px 0px;
+}
+.form .tab-content .form-element input {
+  width:100%;
+  padding:10px;
+  border:1px solid #aaa;
+  font-size:16px;
+  background:#f5f5f5;
+  border-radius:5px;
+  outline:none;
+}
+.form .tab-content .form-element input[type="checkbox"] {
+  width:50px;
+  margin:8px 0px;
+  margin-left:-5px;
+}
+.form .tab-content .form-element label {
+  color:rgb(27, 17, 17);
+}
+.form .tab-content .form-element button {
+  margin-top:5px;
+  width:100%;
+  padding:10px;
+  border:none;
+  outline:none;
+  background:#bfc091;
+  color:#110f0f;
+  font-size:16px;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-radius:5px;
+}
+.form .tab-content > div.active {
+  display:block;
+}
+.form .tab-content > div {
+  display:none;
+}
+/* styling our overall page */
+body     {
+  background: #FFF;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* styling our header */
+header   {
+  background: #222;
+  color: rgb(102, 85, 85);
+  padding: 20px 30px;
+}
+
+/* logo */
+#logo         {
+  display: inline-block;
+  color: #FFF;
+  text-decoration: none;
+  width: 49%;
+}
+
+
+/* main navigation */
+nav     {
+  width: 50%;
+  display: inline-block;
+  text-align: right;
+}
+nav ul   {
+  list-style: none;
+  margin: 0;
+}
+nav ul li {
+  display: inline-block;
+}
+nav ul li a    {
+  color: #FFF;
+  text-decoration: none;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 3px;
+  transition: 0.3s ease all;
+}
+nav ul li a:hover   {
+  background: rgb(112, 41, 41);
+}
+
+/* styling our footer */
+footer   {
+  background: #222;
+  color: #777;
+  padding: 40px;
+  text-align: center;
+}
+footer img   {
+  display: block;
+  border-radius: 5px;
+  width: 80px;
+  margin: 0 auto 10px;
+}
+
+/* styling our main content */
+.hero           {
+  min-height: 800px;
+  text-align: center;
+  background-image: url('../img/sky.jpg');
+  background-size: cover;
+}
+.hero-content   {
+  color: rgb(85, 38, 38);
+  padding-top: 130px;
+}
+.hero-content h1   {
+  font-size: 100px;
+  margin: 0;
+}
+.hero-content p    {
+  font-size: 50px;
+}
+.hero-content a    {
+  display: inline-block;
+  color: #FFF;
+  border: 3px solid #FFF;
+  border-radius: 3px;
+  padding: 15px 30px;
+  margin-right: 20px;
+  text-decoration: none;
+  font-size: 28px;
+}
+
+/* basic site sections */
+.site-section   {
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
+.site-section-secondary   {
+  background: #EFEFEF;
+}
+.site-section-inside   {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.section-header h2  {
+  font-size: 30px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: #777;
+}
+
+/* feature boxes */
+.feature-box   {
+  display: inline-block;
+  width: 33%;
+  padding: 20px 30px;
+}
+.feature-box img  {
+  margin-bottom: 12px;
+  width: 80px;
+}
+.feature-box h5   {
+  font-size: 20px;
+  color: #999;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+/* testimonial boxes */
+.testimonial-box   {
+  display: inline-block;
+  width: 33%;
+  padding: 20px 30px;
+}
+.testimonial-content   {
+  background: #FFF;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+.testimonial-author           {
+
+}
+.testimonial-author img {
+  float: left;
+  width: 80px;
+  border-radius: 50%;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+.testimonial-author h5   {
+  font-size: 18px;
+  margin: 0;
+  padding-top:15px;
+}
+.testimonial-author span {
+  font-size: 14px;
+}
