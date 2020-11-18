@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for data in mechaniclist %}
+        {% include 'snippet/mech.html' with obj=data %}
+    {% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="cardd">
+        <img src="https://avatars2.githubusercontent.com/u/44160208?s=400&u=9ba6b1d04495b06440ccea13418953295fc6b952&v=4" alt="Rt" style="width:100%">
+        <div class="container">
+        <h1>{{udata.name }}</h1>
+        <h3> Email Id : {{ udata.email_id }}  Username : {{ udata.username }}</h3>
+        <h3> Age : {{ udata.age }}  Gender : {{ udata.gender }} DL number : {{ udata.dLicense }}</h3>
+        </div>
+    </div>
+{% endblock content %}

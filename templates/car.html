@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% for data in carlist %}
+        {% include 'snippet/carst.html' with obj=data %}
+    {% endfor %}
+
+{% endblock content %}
