@@ -2,16 +2,24 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import viewsets, status
-from . import serializers
-from .serializers import Car, CarSerializer, MechanicSerializer, Mechanic, UserSerializer, User, EmployeeSerializer
-from .serializers import Employee, Verify, VerifySerializer, cBooking, cBookingSerializer, mBooking, mBookingSerializer
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
 dynamodb = boto3.resource('dynamodb')
-
-
-# ----------------------------------------------------- CAR Crud ---------------------------------------------------#
 car_table = dynamodb.Table('Car')
+user_table = dynamodb.Table('User')
+emp_table = dynamodb.Table('Employee')
+cB_table = dynamodb.Table('bookings')
+mB_table = dynamodb.Table('mBooking')
+ver_table = dynamodb.Table('verifications')
+mechanic_table = dynamodb.Table('Mechanic')
+
+from . import serializers
+from .serializers import Car, CarSerializer, MechanicSerializer, Mechanic, UserSerializer, User, EmployeeSerializer
+from .serializers import Employee, Verify, VerifySerializer, cBooking, cBookingSerializer, mBooking, mBookingSerializer
+
+
+# ------------------------------------------------------- CAR Crud ---------------------------------------------------------------#
+
 class carGP(APIView):
 
     def get(self, request):
@@ -40,7 +48,6 @@ class carGP(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class carGDU(APIView):
 
     def get_object(self,pk):
@@ -59,7 +66,7 @@ class carGDU(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # ------------------------------------------------------- Mechanic CRUD---------------------------------------------------------------#
-mechanic_table = dynamodb.Table('Mechanic')
+
 class mechGP(APIView):
 
     def get(self, request):
@@ -74,6 +81,7 @@ class mechGP(APIView):
             mechanic_table.put_item(
                 Item={
                     'email_id': task.email_id,
+                    'g_name' : task.g_name,
                     'co_ordinates': task.co_ordinates,
                     'earnings': task.earnings,
                     'rating': task.rating,
@@ -102,9 +110,8 @@ class mechGDU(APIView):
         mechanic_table.delete_item(key={'email_id':pk},)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 # ----------------------------------------------------USER CRUD---------------------------------------------------------------- #
-user_table = dynamodb.Table('User')
+
 class userGP(APIView):
 
     def get(self, request):
@@ -148,9 +155,8 @@ class userGDU(APIView):
         user_table.delete_item(key={'email_id':pk},)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 # ----------------------------------------------------Employee CRUD---------------------------------------------------------------- #
-emp_table = dynamodb.Table('Employee')
+
 class employeeGP(APIView):
 
     def get(self, request):
@@ -190,9 +196,8 @@ class employeeGDU(APIView):
         emp_table.delete_item(key={'email_id':pk},)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
 # ----------------------------------------------------cBooking CRUD---------------------------------------------------------------- #
-cB_table = dynamodb.Table('bookings')
+
 class cBookingGP(APIView):
 
     def get(self, request):
@@ -230,9 +235,8 @@ class cBookingGDU(APIView):
         serializer = cBookingSerializer(obj,many=True)
         return Response(serializer.data)
 
-
 # ----------------------------------------------------mBooking CRUD---------------------------------------------------------------- #
-mB_table = dynamodb.Table('mBooking')
+
 class mBookingGP(APIView):
 
     def get(self, request):
@@ -268,9 +272,8 @@ class mBookingGDU(APIView):
         serializer = mBookingSerializer(obj,many=True)
         return Response(serializer.data)
 
-
 # ----------------------------------------------------verifying CRUD---------------------------------------------------------------- #
-ver_table = dynamodb.Table('verifications')
+
 class verGP(APIView):
 
     def get(self, request):
@@ -310,32 +313,7 @@ class verGDU(APIView):
         ver_table.delete_item(key={'sr':pk},)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-
-
 # ------------------------------------------------------------------------------------------------------------------------#
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # -------------------------------------------------------- Car --------------------------------------------------------#
