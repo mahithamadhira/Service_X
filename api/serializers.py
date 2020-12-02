@@ -31,12 +31,13 @@ class CarSerializer(serializers.Serializer):
 
 class Mechanic(object):
     def __init__(self, **kwargs):
-        for field in ('email_id', 'co_ordinates', 'earnings','rating','service_charge','is_available','is_verified'):
+        for field in ('email_id', 'g_name','co_ordinates', 'earnings','rating','service_charge','is_available','is_verified'):
             setattr(self, field, kwargs.get(field, None))
 
 class MechanicSerializer(serializers.Serializer):
     email_id            = serializers.CharField(max_length=30)
     co_ordinates        = serializers.CharField(max_length=30)
+    g_name              = serializers.CharField(max_length=30)
     earnings            = serializers.IntegerField()
     rating              = serializers.IntegerField()
     service_charge      = serializers.IntegerField()
