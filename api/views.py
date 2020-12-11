@@ -211,7 +211,7 @@ class cBookingGP(APIView):
             task = serializer.save()
             cB_table.put_item(
                 Item={
-                    'sr' : task.sr,
+                    'sr' : str(task.sr),
                     'buyer_email': task.buyer_email,
                     'car_name': task.car_name,
                     'car_number': task.car_number,
@@ -250,7 +250,7 @@ class mBookingGP(APIView):
             task = serializer.save()
             mB_table.put_item(
                 Item={
-                    'sr' : task.sr,
+                    'sr' : str(task.sr),
                     'buyer_email': task.buyer_email,
                     'mech_email' : task.mech_email,
                     'status' : task.status
