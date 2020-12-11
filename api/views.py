@@ -252,7 +252,7 @@ class mBookingGP(APIView):
                 Item={
                     'sr' : task.sr,
                     'buyer_email': task.buyer_email,
-                    'owner_email' : task.owner_email,
+                    'mech_email' : task.mech_email,
                     'status' : task.status
                 }
             )
