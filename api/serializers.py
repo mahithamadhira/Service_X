@@ -149,14 +149,14 @@ class cBookingSerializer(serializers.Serializer):
 #------------------------------------------------------------mBOOKINGS--------------------------------------------------------------------------#
 class mBooking(object):
     def __init__(self, **kwargs):
-        for field in ('sr', 'buyer_email','owner_email','status'):
+        for field in ('sr', 'buyer_email','mech_email','status'):
             setattr(self, field, kwargs.get(field, None))
 
 
 class mBookingSerializer(serializers.Serializer):
     sr                  = serializers.IntegerField()
     buyer_email         = serializers.CharField(max_length=30)
-    owner_email         = serializers.CharField(max_length=30)
+    mech_email         = serializers.CharField(max_length=30)
     status              = serializers.CharField(max_length=30)
     
     def create(self, validated_data):
