@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from home import views as v
 from dashboard import views as dv
 from register import views as regv
@@ -43,10 +43,6 @@ urlpatterns = [
     path('tandc/',dv.tandc, name = "tandc"),
     path('mech_checkout/',dv.mech_checkout_view, name = "mech_checkout"),
     path('success/<str:value>/<str:email>/',dv.success_payment, name = "success"),
-<<<<<<< Updated upstream
-
-=======
     path('mechanic-booking', dv.mechanic_booking, name="mechanic_booking"),
     path('api/',include('api.urls')),
->>>>>>> Stashed changes
 ]

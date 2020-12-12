@@ -76,60 +76,70 @@
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-user"></i></span>
                                 </div>
-                                <input class="signup" type="text" name="fname" placeholder="First name">
+                                <input class="signup" type="text" name="fname" placeholder="First name"  required>
                             </div>
                             
                             <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-envelope-square"></i></span>
                                 </div>
-                                <input class="login" type="text" name="lname" placeholder="Last name">
+                                <input class="login" type="text" name="lname" placeholder="Last name" required>
                             </div>
 
                             <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-envelope-square"></i></span>
                                 </div>
-                                <input class="login" type="text" name="username" placeholder="Username">
+                                <input class="login" type="text" name="username" placeholder="Username"required>
                             </div>
 
                             <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-envelope-square"></i></span>
                                 </div>
-                                <input class="login" type="email" name="email" placeholder="Email">
+                                <input class="login" type="email" name="email" placeholder="Email" required>
                             </div>
 
                             <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-envelope-square"></i></span>
                                 </div>
-                                <input class="login" type="text" name="gender" placeholder="Gender">
+                                <input class="login" type="text" name="gender" placeholder="Gender" required>
                             </div>
                             
                             <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-envelope-square"></i></span>
                                 </div>
-                                <input class="login" type="number" name="age" placeholder="Age">
+                                <input class="login" type="number" name="age" placeholder="Age" required>
                             </div>
 
                             <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-key"></i></span>
                                 </div>
-                                <input class="login" type="password" name="password" placeholder="Password">
+                                <input class="login" type="password" name="password" placeholder="Password" required>
                             </div>
                             <div class="input-group mb-2">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-key"></i></span>
                                 </div>
-                                <input class="login" type="password" name="re_password" placeholder="Password">
+                                <input class="login" type="password" name="re_password" placeholder="Password" required>
                             </div>
     
                                <div class="d-flex justify-content-center mt-3 login_container">
                                  <input class="btn login_btn" type="submit" value="Register Account">
                                </div>
+
+                               {% if messages %}
+                               <ul class="messages">
+                                   {% for message in messages %}
+                                   <div class="container">
+                                      <strong> <h6 class="{{ message.tags }}" style = "color: #fa1e0a;">{{ message }}</h6></strong>
+                                   </div>
+                                   {% endfor %}
+                               </ul>
+                               {% endif %}
                         </form>
                     </div>
             

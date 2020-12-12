@@ -3,36 +3,7 @@
 {% load static %}
 
 {% block content %}
-<style>
-  body,
-html {
-         background-image: url('https://image.freepik.com/free-vector/abstract-blue-vector-background-with-triangles_56103-550.jpg'); 
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-.user_card {
-  opacity: 0.73;
-  height: 500px;
-  width: 310px;
-  margin-bottom: auto;
-  background: #2e6bb1;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 5px;
 
-<<<<<<< Updated upstream
-}
-=======
 <h1>Gave cars page le</h1>
 <div class="container shadow p-3 mb-5">
     <form method="POST" enctype="multipart/form-data" action="{% url 'user_gib' %}">
@@ -46,150 +17,32 @@ html {
         <input class="signup" type="text" name="is_verified" placeholder="is_verified" value = "{{ is_verified }}" disabled>
         <input class="signup" type="number" id = "lat"name="lat" placeholder="is_verified" value = "{{ lat }}" hidden step=".01">
         <input class="signup" type="number" id = "long"name="long" placeholder="is_verified" value = "{{ long }}" hidden step=".01">
->>>>>>> Stashed changes
 
-.form_container {
-  margin-top: 20px;
-}
 
-<<<<<<< Updated upstream
-#form-title{
-  color: #fff;
-=======
         <!-- <input class="signup" type="number" name="rating" placeholder="rating" value = "{{ rating }}" disabled>
         <input class="signup" type="number" name="earnings" placeholder="Earnings" value = "{{ earnings }}" disabled> -->
         <input class="signup" type="number" name="cost_perday" placeholder="cost_perday" value = "{{ cost_perday }}">
         <input type="file" name="sentFile" value="{{ img }}"> <span id='val'></span>
->>>>>>> Stashed changes
-
-}
-
-.login_btn {
-  width: 100%;
-  background:#05057a !important;
-  color: white !important;
-}
-.login_btn:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
-}
-.login_container {
-  padding: 0 2rem;
-}
-.input-group-text {
-  background: #395588 !important;
-  color: white !important;
-  border: 0 !important;
-  border-radius: 0.25rem 0 0 0.25rem !important;
-}
-.input_user,
-.input_pass:focus {
-  box-shadow: none !important;
-  outline: 0px !important;
-}
-
-#messages{
-  background-color: grey;
-  color: #fff;
-  padding: 10px;
-  margin-top: 10px;
-    }
-    .name{
-        padding-left: 100px;
-    }
-    .first{
-        border-radius: 4%;
-        font-size: 15px;
-        color:black;
-        font-weight: 900;
-    }
-    .butn{
-        margin-top: 40px;
-        height: 40px;
-    }
-    #map{
-      width: 100%;
-      height: 100ox;
-      flex: 60%;
-    }
-    .contact-in{
-      margin-top: 200px;
-      width: 90%;
-      margin-left: 100px;
-      display: flex;
-      flex-wrap: wrap;
-      padding: 10px;
-      border-radius: 10px;
-    }
-</style>
-<div class="contact-in">
-  <form method="POST" action="{% url 'user_dashboard' %}">
-    {% csrf_token %}
-
-  <div  id="map"></div>
-
-<div class="first">
-  <div class="container contr h-100">
-    <div class="d-flex justify-content-center h-100">
-      <div class="user_card">
-        <div class="d-flex justify-content-center">
 
 
-                  <table class="tab" >
-                  <tr>
-                  <td>
-                  <label for="first">First name</label>
-                  <td>
-                    <input class="signup" type="text" name="car_name" placeholder="car_name" value="{{ car_name }}">
-                  </td>
-                  </tr>
-                  <tr><td>
-                  <label for="last name">Last name</label><td>
-                    <input class="signup" type="number" name="car_model" placeholder="car_model" value="{{ car_model }}">
-                  </td></tr>
-                  <tr><td>
-                  <label for="Username">Username</label><td>
-                    <input class="signup" type="text" name="car_number" placeholder="car_number" value = "{{ car_number }}">
-                  </td></tr>
-                  <tr><td>
-                  <label for="Age">Age</label><td>
-                    <input class="signup" type="text" name="email" placeholder="Email" value = "{{ email_id }}" disabled>
-                  </td></tr>
-                  <tr><td>
-                  <label for="Email">Email </label><td>
-                    <input class="signup" type="text" name="is_available" placeholder="is_available" value = "{{ is_available }}">
-                  </td></tr>
-                  <tr><td>
-                  <label for="Employee">Employee</label><td>
-                    <input class="signup" type="text" name="is_verified" placeholder="is_verified" value = "{{ is_verified }}" disabled>
-                  </td></tr>
-                  <tr><td>
+<div  id="map" style="height:500px">
 
-                    <input class="signup" type="number" id = "lat"name="lat" placeholder="latitude" value = "{{ lat }}" hidden>
-                    <input class="signup" type="number" id = "long"name="long" placeholder="longitude" value = "{{ long }}" hidden>
-
-                  <label for="Latitude">Latitude</label><td>
-                    <input class="signup" type="number" id = "lat"name="lat" placeholder="latitude" value = "{{ lat }}" disabled>
-                  </td></tr>
-                  <tr><td>
-                  <label for="Longitude">Longitude</label><td>
-                    <input class="signup" type="number" id = "long"name="long" placeholder="longitude" value = "{{ long }}" disabled>
-                  </td></tr>
-                  <tr><td>
-
-                  <label for="Contact no.">Contact no. </label><td>
-                    <input class="signup" type="number" name="cost_perday" placeholder="cost_perday" value = "{{ cost_perday }}">
-                  </td></tr>
-                  <tr><td colspan="2">
-                   <input class="butn bth-primary btn-submit login_btn" type="submit" value="Give on rent!!">
-              </table>    
-      </div>
-      </div>
-    </div>
-  </div>
 </div>
-</form>
-</div>
+
+        <div class="d-flex justify-content-center mt-3 login_container">
+            <input class="btn login_btn" type="submit" value="Register Account">
+          </div>
+    </form>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div class="container">
+            <h6 class="{{ message.tags }}" style = "color: #de5246">{{ message }}</h6>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     <script>
       function initMap() {
         var latitudes={{lat|safe}};
@@ -290,14 +143,7 @@ function placeMarker(location,temp) {
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMyd2ikeOMG1xokxmoEuzNLWAU4T6riaQ&callback=initMap">
     </script>
 
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMyd2ikeOMG1xokxmoEuzNLWAU4T6riaQ&callback=initMap">
-</script>
 
-
-
-<<<<<<< Updated upstream
-=======
  </div>
 
 <div style="width:200px; height:200px ; float:left">
@@ -339,5 +185,4 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMyd2ikeOMG1xokxmoEuzNLWA
 
 
 
->>>>>>> Stashed changes
 {% endblock content %}

@@ -3,15 +3,7 @@
 {% load static %}
 
 {% block content %}
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <div class="container">
-        <h6 class="{{ message.tags }}" style = "color: #de5246">{{ message }}</h6>
-    </div>
-    {% endfor %}
-</ul>
-{% endif %}
+
 <style>
       body,
 		html {
@@ -147,8 +139,6 @@
 
 
                                  <input class="butn bth-primary btn-submit login_btn" type="submit" value="Register Account">
-<<<<<<< Updated upstream
-=======
 
                                  {% if messages %}
                                 <ul class="messages">
@@ -160,7 +150,6 @@
                                 </ul>
                                 {% endif %}
 
->>>>>>> Stashed changes
                             </table>
                         </form>
                     </div>

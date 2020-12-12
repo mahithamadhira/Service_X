@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'six',
+    'rest_framework',
     'register.apps.RegisterConfig',
     'home.apps.HomeConfig',
     'dashboard.apps.DashboardConfig',

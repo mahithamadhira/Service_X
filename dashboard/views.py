@@ -216,8 +216,6 @@ def user_dashboard(request):
 			dic['is_admin'] =  response['Items'][0]['is_admin']
 			dic['is_verified'] =  response['Items'][0]['is_verified']
 			dic['contact'] =  response['Items'][0]['contact']
-<<<<<<< Updated upstream
-=======
 			dic['img'] = response['Items'][0]['img']
 
 			email_id= request.session['email_id']
@@ -243,15 +241,11 @@ def user_dashboard(request):
 				request.session['is_available_mech'] = response['Items'][0]['is_available']
 				request.session['is_verified_mech'] = response['Items'][0]['is_verified']
 				request.session['rating_mech'] = int(response['Items'][0]['rating'])
->>>>>>> Stashed changes
 			return render(request,'dashboard/user.html',dic)
 
 
 def employee_earnings(request):
 	if request.session['is_admin'] ==True :
-<<<<<<< Updated upstream
-		return render(request, 'dashboard/emp_earn.html')
-=======
 		email= request.session['email_id']
 		dynamodb = boto3.resource('dynamodb')
 		table = dynamodb.Table('verifications')
@@ -269,7 +263,6 @@ def employee_earnings(request):
 		dic['verified_cars'] = verified_cars
 		dic['verified_mechs'] = verified_mechs
 		return render(request, 'dashboard/emp_earn.html',dic)
->>>>>>> Stashed changes
 	return redirect('user_dashboard')
 
 def mech_earnings(request):
@@ -393,134 +386,10 @@ def user_took(request):
 
 def user_gib(request):
 	if request.method == 'POST' :
-		car_name = request.POST.get('car_name')
-		car_number = request.POST.get('car_number')
-		email_id = request.session['email_id']
-		car_model = request.POST.get('car_model')
-		# co_ordinates = request.POST.get('co_ordinates')
-		cost_perday = int(request.POST.get('cost_perday'))
-		is_available = request.POST.get('is_available')
-		lat = request.POST.get('lat')
-		long = request.POST.get('long')
-		co_ordinates = '['
-		co_ordinates+=lat
-		co_ordinates+=','
-		co_ordinates+=long
-		co_ordinates+=']'
-		print(co_ordinates)
-		#is_verified = request.POST.get('is_verified')
-		#rating = int(request.POST.get('rating'))
-		#earnings = int(request.POST.get('earnings'))
-
-
-		if(is_available == 'true'):
-			is_available = True
+		if(request.session['dLicense']=='-' or request.session['contact']=='-'):
+			messages.success(request, "Please fill the contact number and/or license number")
+			return redirect('user_gib')
 		else:
-<<<<<<< Updated upstream
-			is_available = False
-
-		# print("=========================================================================================")
-		# print('Before updating')
-		# print(type(cost_perday))
-		# #print(type(rating))
-		# #print(type(earnings))
-		# print(type(is_available))
-		# #print(type(is_verified))
-
-		dynamodb = boto3.resource('dynamodb')
-		table = dynamodb.Table('Car')
-		response = table.update_item(
-			Key={
-				'email_id': email_id,
-			},
-			UpdateExpression="set car_name=:car_name, car_number=:car_number, car_model =:car_model, co_ordinates =:co_ordinates, cost_perday = :cost_perday, is_available =:is_available",
-			ExpressionAttributeValues={
-				':car_name': car_name,
-				':car_number': car_number,
-				':car_model': car_model,
-				':co_ordinates':co_ordinates,
-				':cost_perday':cost_perday,
-				':is_available':is_available,
-			},
-			ReturnValues="UPDATED_NEW"
-		)
-		# print("=========================================================================================")
-		# print('After updating')
-		# print(type(cost_perday))
-		# #print(type(rating))
-		# #print(type(earnings))
-		# print(type(is_available))
-		# #print(type(is_verified))
-		# print("==========================================================================================")
-
-		dic = {}
-		dynamodb = boto3.resource('dynamodb')
-		table = dynamodb.Table('Car')
-		response = table.scan(
-			FilterExpression=Attr('email_id').eq(email_id)
-		)
-
-		print('table scan')
-		print(response['Items'][0]['co_ordinates'])
-		print(type(response['Items'][0]['co_ordinates']))
-		print(response['Items'][0]['co_ordinates'][0])
-		lat = ""
-		long = ""
-		temp=0
-		for i in response['Items'][0]['co_ordinates'][1:-1]:
-			if i==',':
-				temp=1
-			elif temp==0:
-				lat+=i
-			else:
-				long+=i
-
-		dic['email_id'] = email_id
-		dic['car_name'] = response['Items'][0]['car_name']
-		dic['car_number'] = response['Items'][0]['car_number']
-		dic['car_model'] = response['Items'][0]['car_model']
-		dic['co_ordinates'] = response['Items'][0]['co_ordinates']
-
-		dic['lat'] = float(lat)
-		dic['long'] = float(long)
-
-		print(dic['lat'])
-
-		dic['cost_perday'] = response['Items'][0]['cost_perday']
-		dic['is_available'] =  response['Items'][0]['is_available']
-		dic['is_verified'] =  response['Items'][0]['is_verified']
-		dic['rating'] =  response['Items'][0]['rating']
-		dic['earnings'] =  response['Items'][0]['earnings']
-		# dic['email_id'] = response['Items'][0]['email_id']
-		# dic['car_name'] = response['Items'][0]['car_name']
-		# dic['car_number'] = response['Items'][0]['car_number']
-		# dic['car_model'] = response['Items'][0]['car_model']
-		# dic['co_ordinates'] = response['Items'][0]['co_ordinates']
-		# dic['cost_perday'] = response['Items'][0]['cost_perday']
-		# dic['is_available'] =  response['Items'][0]['is_available']
-		# dic['is_verified'] =  request.session['is_verified']
-		# dic['rating'] =  request.session['rating']
-		# print('rating')
-		# dic['earnings'] =  request.session['earnings']
-		# print('earnings')
-		# request.session['email_id']=response['Items'][0]['email_id']
-		# request.session['car_name']=response['Items'][0]['car_name']
-		# print('email carname')
-		# request.session['car_number']=response['Items'][0]['car_number']
-		# request.session['car_model']=response['Items'][0]['car_model']
-		# print('car number model')
-		# request.session['co_ordinates']=response['Items'][0]['co_ordinates']
-		# request.session['cost_perday'] = response['Items'][0]['cost_perday']
-		# print('coordinates cost per day')
-		# request.session['is_available'] = response['Items'][0]['is_available']
-		# request.session['is_verified'] = response['Items'][0]['is_verified']
-		# print('is available verified')
-		# request.session['rating'] = response['Items'][0]['rating']
-		# print(request.session['rating'])
-		# request.session['earnings'] = response['Items'][0]['earnings']
-		print('ayyindi mari')
-		return render(request,'dashboard/gave_car.html',dic)
-=======
 			car_name = request.POST.get('car_name')
 			car_number = request.POST.get('car_number')
 			email_id = request.session['email_id']
@@ -680,7 +549,6 @@ def user_gib(request):
 			# print(type(is_available))
 			# #print(type(is_verified))
 			# print("==========================================================================================")
->>>>>>> Stashed changes
 	else:
 		email = request.session['email_id']
 		dic = {}
@@ -691,11 +559,6 @@ def user_gib(request):
 		)
 		print(response['Items'])
 		dic['email_id'] = email
-<<<<<<< Updated upstream
-		dic['car_name'] = response['Items'][0]['car_name']
-		dic['car_number'] = response['Items'][0]['car_number']
-		dic['car_model'] = response['Items'][0]['car_model']
-=======
 		if(response['Items'][0]['car_name'] == "none"):
 			dic['car_name']=""
 		else:
@@ -716,7 +579,6 @@ def user_gib(request):
 		# else:
 		# 	dic['cost_perday'] = response['Items'][0]['cost_perday']
 
->>>>>>> Stashed changes
 		dic['co_ordinates'] = response['Items'][0]['co_ordinates']
 
 		lat = ""
@@ -1011,24 +873,31 @@ def employee_dashboard(request):
 				)
 
 				email_id = request.session['email_id']
+				for key, value in request.session.items():
+   					print('{} => {}'.format(key, value))
 				earnings = request.session['earnings_emp']
 				print('============kars===================')
 				print(earnings)
 				earnings = earnings + 1000
 				print(earnings)
 
+				verified_count = request.session['verified_count_emp']
+				verified_count+=1
+
 				table = dynamodb.Table('Employee')
 				response = table.update_item(
 					Key={
 						'email_id': email_id,
 					},
-					UpdateExpression="set earnings =:earnings",
+					UpdateExpression="set earnings =:earnings, verified_count = :verified_count",
 					ExpressionAttributeValues={
 						':earnings':earnings,
+						':verified_count':verified_count,
 					},
 					ReturnValues="UPDATED_NEW"
 				)
 				request.session['earnings_emp'] = earnings
+				request.session['verified_count_emp'] = verified_count
 
 
 				table = dynamodb.Table('verifications')
@@ -1360,40 +1229,9 @@ def success_payment(request,value,email):
 		#return render(request,'dashboard/checkout.html')
 		return redirect('login')
 	else:
-<<<<<<< Updated upstream
-		dic = {}
-		dynamodb = boto3.resource('dynamodb')
-		table = dynamodb.Table('Car')
-
-		print(value)
-		print("set aindi ra")
-		print(email)
-		if value=='yes':
-			response = table.scan(
-				FilterExpression=Attr('email_id').eq(email)
-			)
-			earnings = int(response['Items'][0]['earnings']) + int(response['Items'][0]['cost_perday'])
-			is_available = False
-			response = table.update_item(
-				Key={
-					'email_id': email,
-				},
-				UpdateExpression="set earnings = :earnings, is_available =:is_available",
-				ExpressionAttributeValues={
-					':earnings': earnings,
-					':is_available':is_available,
-				},
-				ReturnValues="UPDATED_NEW"
-			)
-			owner_email = email
-			buyer_email = request.session['email_id']
-			car_no = request.session['owner_car_number']
-			car_name = request.session['owner_car_name']
-=======
 		print('dont dont dont')
 		if 'owner_email' in request.session and 'mech_email' not in request.session:
 			dic = {}
->>>>>>> Stashed changes
 			dynamodb = boto3.resource('dynamodb')
 			table = dynamodb.Table('Car')
 

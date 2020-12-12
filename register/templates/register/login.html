@@ -101,7 +101,16 @@
 
 							<div class="d-flex justify-content-center mt-3 login_container">
 				 				<input class="btn login_btn" type="submit" value="Login">
-				   		</div>
+						   </div>
+						   {% if messages %}
+						   <ul class="messages">
+							   {% for message in messages %}
+							   <div class="container">
+								  <strong> <h6 class="{{ message.tags }}" style = "color: #fa1e0a;">{{ message }}</h6></strong>
+							   </div>
+							   {% endfor %}
+						   </ul>
+						   {% endif %}
 					</form>
 
 				</div>
