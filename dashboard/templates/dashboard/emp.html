@@ -1,9 +1,10 @@
+
 {% extends 'dashboard/index.html' %}
 
 {% load static %}
 
 {% block content %}
-<h1>Employee dashboard this</h1>
+<!-- <h1>Employee dashboard this</h1>
 
     <input class="signup" type="text" name="email_id" placeholder="Email" value="{{ email_id }}" disabled>
     <input class="signup" type="number" name="contact" placeholder="Contact" value="{{ contact }}" disabled>
@@ -39,6 +40,128 @@
         <input class="btn bth-primary btn-submit login_btn" type="submit" value="Yes">
     </div>
   </form>
-    {% endfor %}
+    {% endfor %} -->
+    <style>
+      * {
+        font-family: sans-serif;
+      }
+
+      .content-table {
+        border-collapse: collapse;
+        margin-top: 140px;
+        margin-left: 400px;
+        font-size: 0.9em;
+        width: 800px;
+        height: 400px;
+        min-width: 400px;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .content-table thead tr {
+        background-color: #0e046b;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+      }
+
+      .content-table th,
+      .content-table td {
+        padding: 12px 15px;
+      }
+
+      .content-table tbody tr {
+        border-bottom: 1px solid #4e46b6;
+      }
+
+      .content-table tbody tr:nth-of-type(even) {
+        background-color: #d8dbe9;
+      }
+
+      .content-table tbody tr:last-of-type {
+        border-bottom: 2px solid #342996;
+      }
+
+      .content-table tbody tr.active-row {
+        font-weight: bold;
+        color: #009879;
+      }
+      .dropdown{
+        margin-top: 20px;
+        margin-left: 720px;
+      }
+      .btn{
+        background-color: rgb(16, 43, 94);
+        color: rgb(248, 248, 252);
+      }
+    </style>
+
+    <div class="card" style="width: 18rem; margin-top: 100px;">
+      <div class="card-body">
+        <h5 class="card-title">{{ email_id }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted"> {{ verified_count }}</h6>
+        <p class="card-text">{{ earnings }}</p>
+      </div>
+    </div>
+
+    <table class="content-table">
+      <thead>
+        <tr>
+          <th>Car Model</th>
+          <th>Car name</th>
+          <th>Car Number</th>
+          <th>Co-ordinates</th>
+          <th>email id</th>
+          <th>Select</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for i in Cars %}
+          <form method="POST" action="{% url 'emp_dashboard' %}">
+          {% csrf_token %}
+          <tr>
+              <th scope="row">{{ i.car_model }}</th>
+              <td>{{ i.car_name }}</td>
+              <td>{{ i.car_number }}</td>
+              <td>{{ i.co_ordinates }}</td>
+              <td>{{ i.email_id }}</td>
+              <td>
+                <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+                <input type="text" id="type" name="type" value="cars" hidden>
+                <button class="btn btn-primary" type="submit">Yes</button>
+              </td>
+              <br>
+          </tr>
+        </form>
+          {% endfor %}
+    </table>
+
+    <table class="content-table">
+      <thead>
+        <tr>
+          <th>Co-ordinates</th>
+          <th>Service_charge</th>
+          <th>email id</th>
+          <th>Select</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in Mechanics %}
+        <form method="POST" action="{% url 'emp_dashboard' %}">
+        {% csrf_token %}
+        <tr>
+            <th scope="row">{{ i.co_ordinates }}</th>
+            <td>{{ i.service_charge }}</td>
+            <td>{{ i.email_id }}</td>
+            <td>
+            <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+            <input type="text" id="type" name="type" value="mechanics" hidden>
+            <button class="btn btn-primary" type="submit">Yes</button></td>
+            <br>
+        </tr>
+      </form>
+        {% endfor %}
+    </table>
 
 {% endblock content %}

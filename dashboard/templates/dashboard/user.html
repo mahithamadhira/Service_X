@@ -101,7 +101,7 @@
             <div class="d-flex justify-content-center h-100">
                 <div class="user_card">
                     <div class="d-flex justify-content-center">
-                        <form method="POST" action="{% url 'user_dashboard' %}">
+                        <form method="POST" enctype="multipart/form-data" action="{% url 'user_dashboard' %}">
                             {% csrf_token %}
                                 <table class="tab" >
                                 <tr>
@@ -142,7 +142,25 @@
                                 <label for="License"> License number</label><td>
                                 <input class="signup" type="text" name="dLicense" placeholder="License number" value = "{{ dLicense }}"></td></tr>
                                 <tr><td colspan="2">
+
+                                <input type="file" name="sentFile" value="{{ img }}"> <span id='val'></span>
+
+
                                  <input class="butn bth-primary btn-submit login_btn" type="submit" value="Register Account">
+<<<<<<< Updated upstream
+=======
+
+                                 {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <div class="container">
+                                       <strong> <h6 class="{{ message.tags }}" style = "color: #fa1e0a;">{{ message }}</h6></strong>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+
+>>>>>>> Stashed changes
                             </table>
                         </form>
                     </div>
@@ -150,4 +168,16 @@
             </div>
         </div>
     </div>
+
+
+<script>
+    $('#button').click(function () {
+        $("input[type='file']").trigger('click');
+    })
+
+    $("input[type='file']").change(function () {
+        $('#val').text(this.value.replace(/C:\\fakepath\\/i, ''))
+    })
+</script>
+
 {% endblock content %}

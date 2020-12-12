@@ -85,6 +85,7 @@ def signup(request):
                 response = table.scan(
                     FilterExpression=Attr('email_id').eq(email_id)
                 )
+<<<<<<< Updated upstream
                 request.session['email_id']=response['Items'][0]['email_id']
                 request.session['password']=response['Items'][0]['password']
                 request.session['fname']=response['Items'][0]['fname']
@@ -118,6 +119,65 @@ def signup(request):
                     FilterExpression=Attr('email_id').eq(email_id)
                 )
                 print(response['Items'])
+=======
+                print('b')
+                if(len(response['Items'])==0):
+                    print('c')
+                    response = table.put_item(
+                    Item={
+                        'fname': fname,
+                        'email_id': email_id,
+                        'password': password,
+                        'lname': lname,
+                        'username': username,
+                        'age': age,
+                        'gender': gender,
+                        'contact': '-',
+                        'dLicense':'-',
+                        'is_admin':False,
+                        'is_staff':False,
+                        'is_verified':False,
+                        'img': '',
+                        }
+                    )
+                    response = table.scan(
+                        FilterExpression=Attr('email_id').eq(email_id)
+                    )
+                    request.session['email_id']=response['Items'][0]['email_id']
+                    request.session['password']=response['Items'][0]['password']
+                    request.session['fname']=response['Items'][0]['fname']
+                    request.session['lname']=response['Items'][0]['lname']
+                    request.session['username']=response['Items'][0]['username']
+                    request.session['age']=int(response['Items'][0]['age'])
+                    request.session['gender']=response['Items'][0]['gender']
+                    request.session['is_admin'] = response['Items'][0]['is_admin']
+                    request.session['is_staff'] = response['Items'][0]['is_staff']
+                    request.session['is_verified'] = response['Items'][0]['is_verified']
+                    request.session['contact'] = response['Items'][0]['contact']
+                    request.session['dLicense'] = response['Items'][0]['dLicense']
+
+                    dynamodb = boto3.resource('dynamodb')
+                    table = dynamodb.Table('Car')
+                    response = table.put_item(
+                        Item = {
+                            'email_id':email_id,
+                            'car_model':'0',
+                            'car_name':'none',
+                            'car_number':'none',
+                            'co_ordinates':'-',
+                            'cost_perday':0,
+                            'earnings' :0,
+                            'is_available':False,
+                            'is_verified' : False,
+                            'rating' : -1,
+                            'img':'',
+                        }
+                    )
+                    response = table.scan(
+                        FilterExpression=Attr('email_id').eq(email_id)
+                    )
+                    print(response['Items'])
+>>>>>>> Stashed changes
 
                 #request.session['email_id'] = response['Items'][0]['email_id']
                 request.session['car_model'] = response['Items'][0]['car_model']

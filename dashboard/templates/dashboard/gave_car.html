@@ -30,14 +30,37 @@ html {
   -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 
+<<<<<<< Updated upstream
 }
+=======
+<h1>Gave cars page le</h1>
+<div class="container shadow p-3 mb-5">
+    <form method="POST" enctype="multipart/form-data" action="{% url 'user_gib' %}">
+        {% csrf_token %}
+        <input class="signup" type="text" name="car_name" placeholder="car_name" value="{{ car_name }}" required>
+        <input class="signup" type="number" name="car_model" placeholder="car_model" value="{{ car_model }}" required>
+        <input class="signup" type="text" name="car_number" placeholder="car_number" value = "{{ car_number }}" required>
+        <input class="signup" type="text" name="co_ordinates" placeholder="co_ordinates" value="{{ co_ordinates }}" disabled>
+        <input class="signup" type="text" name="email" placeholder="Email" value = "{{ email_id }}" disabled>
+        <input class="signup" type="text" name="is_available" placeholder="is_available" value = "{{ is_available }}" required>
+        <input class="signup" type="text" name="is_verified" placeholder="is_verified" value = "{{ is_verified }}" disabled>
+        <input class="signup" type="number" id = "lat"name="lat" placeholder="is_verified" value = "{{ lat }}" hidden step=".01">
+        <input class="signup" type="number" id = "long"name="long" placeholder="is_verified" value = "{{ long }}" hidden step=".01">
+>>>>>>> Stashed changes
 
 .form_container {
   margin-top: 20px;
 }
 
+<<<<<<< Updated upstream
 #form-title{
   color: #fff;
+=======
+        <!-- <input class="signup" type="number" name="rating" placeholder="rating" value = "{{ rating }}" disabled>
+        <input class="signup" type="number" name="earnings" placeholder="Earnings" value = "{{ earnings }}" disabled> -->
+        <input class="signup" type="number" name="cost_perday" placeholder="cost_perday" value = "{{ cost_perday }}">
+        <input type="file" name="sentFile" value="{{ img }}"> <span id='val'></span>
+>>>>>>> Stashed changes
 
 }
 
@@ -273,4 +296,48 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMyd2ikeOMG1xokxmoEuzNLWA
 
 
 
+<<<<<<< Updated upstream
+=======
+ </div>
+
+<div style="width:200px; height:200px ; float:left">
+ {% for i in buyer_details_contact %}
+ <div class="card" style="width: 18rem;margin: 40px 30px 10px 50px">
+   <!-- <img class="card-img-top" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F512495632592312509%2F&psig=AOvVaw3Gt2JghuvTVUdo6MjazFPS&ust=1605932673999000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPj_2cajkO0CFQAAAAAdAAAAABAD" alt="Card image cap" style = "height:300px; width: 300px;"> -->
+   <!-- <div class="card-body"> -->
+     <!-- <h5 class="card-title">{{ i.car_name }}</h5> -->
+   <!-- </div> -->
+   <ul class="list-group list-group-flush">
+     <!-- <li class="list-group-item">Price $</li> -->
+     <li class="list-group-item">{{ i.email_buyer }}</li>
+     <li class="list-group-item">{{ i.contact }}</li>
+   </ul>
+   <!-- <div class="card-body"> -->
+     <!-- <a href="#" class="card-link" style="padding-right:45px;margin-top: 50px;">Add a review</a> -->
+     <!-- <form method="POST" action="{% url 'user_took' %}"> -->
+     <!-- {% csrf_token %} -->
+     <!-- <input type = "text" name = "email_id" value = "{{ i.owner_email }}" hidden> -->
+     <!-- <button type="submit" class="card-link btn btn-danger" style="margin-left:145px; margin-top:1px;">Returned?</button> -->
+     <!-- </form> -->
+   </div>
+   {% endfor %}
+
+</div>
+
+ </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
 {% endblock content %}

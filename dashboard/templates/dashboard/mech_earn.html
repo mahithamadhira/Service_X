@@ -4,4 +4,31 @@
 
 {% block content %}
 <h1>Mechanic earnings dashboard this</h1>
+
+
+    <div style="width:200px; height:200px ; float:left">
+     {% for i in buyer_details_contact %}
+     <div class="card" style="width: 18rem;margin: 40px 30px 10px 50px">
+       <!-- <img class="card-img-top" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pinterest.com%2Fpin%2F512495632592312509%2F&psig=AOvVaw3Gt2JghuvTVUdo6MjazFPS&ust=1605932673999000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPj_2cajkO0CFQAAAAAdAAAAABAD" alt="Card image cap" style = "height:300px; width: 300px;"> -->
+       <!-- <div class="card-body"> -->
+         <!-- <h5 class="card-title">{{ i.car_name }}</h5> -->
+       <!-- </div> -->
+       <ul class="list-group list-group-flush">
+         <!-- <li class="list-group-item">Price $</li> -->
+         <li class="list-group-item">{{ i.email_buyer }}</li>
+         <li class="list-group-item">{{ i.contact }}</li>
+       </ul>
+       <!-- <div class="card-body"> -->
+         <!-- <a href="#" class="card-link" style="padding-right:45px;margin-top: 50px;">Add a review</a> -->
+         <!-- <form method="POST" action="{% url 'user_took' %}"> -->
+         <!-- {% csrf_token %} -->
+         <!-- <input type = "text" name = "email_id" value = "{{ i.owner_email }}" hidden> -->
+         <!-- <button type="submit" class="card-link btn btn-danger" style="margin-left:145px; margin-top:1px;">Returned?</button> -->
+         <!-- </form> -->
+       </div>
+       {% endfor %}
+
+    </div>
+
+
 {% endblock content %}
