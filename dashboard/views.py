@@ -6,6 +6,9 @@ from django.contrib import sessions
 from django.contrib import messages
 from django.core.files.storage import FileSystemStorage
 from django.core.files.storage import FileSystemStorage
+from telesign.messaging import MessagingClient
+import requests
+import json
 
 # Create your views here.
 
@@ -344,6 +347,15 @@ def user_took(request):
 		FilterExpression=Attr('buyer_email').eq(email)
 	)
 	for i in response['Items']:
+		print(i['owner_email'])
+		owner_email = i['owner_email']
+		table1 = dynamodb.Table('Car')
+		response = table1.scan(
+			FilterExpression=Attr('email_id').eq(owner_email)
+		)
+		img = response['Items'][0]['img']
+		i['img'] = img
+		print(i['img'])
 		took_cars.append(i)
 	dic['took_cars'] =  took_cars
 
@@ -514,7 +526,7 @@ def user_gib(request):
 
 				buy_email = []
 				for i in response['Items']:
-					if i['owner_email'] == email:
+					if i['owner_email'] == email_id:
 						buy_email.append(i['buyer_email'])
 
 				dynamodb = boto3.resource('dynamodb')
@@ -652,10 +664,12 @@ def mech_dashboard(request):
 			service_charge = int(request.POST.get('service_charge'))
 			#earnings = request.session['earnings']
 			is_available = request.POST.get('is_available')
+			g_name = request.POST.get('g_name')
 			#is_verified = request.session['is_verified']
 			#rating = request.session['rating']
 			lat = request.POST.get('lat')
 			long = request.POST.get('long')
+			print(g_name)
 			co_ordinates = '['
 			co_ordinates+=lat
 			co_ordinates+=','
@@ -690,23 +704,28 @@ def mech_dashboard(request):
 					is_available = 'True'
 				else:
 					is_available = 'False'
-
-				dynamodb = boto3.resource('dynamodb')
-				table = dynamodb.Table('Mechanic')
-				response = table.update_item(
-					Key={
-						'email_id': email_id,
-					},
-					UpdateExpression="set co_ordinates=:co_ordinates, service_charge=:service_charge, is_available =:is_available, img = :img",
-					ExpressionAttributeValues={
-						':co_ordinates': co_ordinates,
-						':service_charge': service_charge,
-						':is_available':is_available,
-						':img': link,
-					},
-					ReturnValues="UPDATED_NEW"
-				)
-				print('updated values')
+				# if(co_ordinates == '-'):
+				# 	 messages.success(request, 'Please put the location of your shed')
+				# if(service_charge == 0):
+				# 	 messages.success(request, 'You can give services for free!')
+				if(co_ordinates != '[17.18,87.14]' and service_charge!=0):
+					dynamodb = boto3.resource('dynamodb')
+					table = dynamodb.Table('Mechanic')
+					response = table.update_item(
+						Key={
+							'email_id': email_id,
+						},
+						UpdateExpression="set co_ordinates=:co_ordinates, service_charge=:service_charge, is_available =:is_available, img = :img, g_name = :g_name",
+						ExpressionAttributeValues={
+							':co_ordinates': co_ordinates,
+							':service_charge': service_charge,
+							':is_available':is_available,
+							':img': link,
+							':g_name':g_name,
+						},
+						ReturnValues="UPDATED_NEW"
+					)
+					print('updated values')
 				dic = {}
 				dynamodb = boto3.resource('dynamodb')
 				table = dynamodb.Table('Mechanic')
@@ -717,6 +736,7 @@ def mech_dashboard(request):
 				lat = ""
 				long = ""
 				temp=0
+				print(response['Items'])
 				for i in response['Items'][0]['co_ordinates'][1:-1]:
 					if i==',':
 						temp=1
@@ -724,8 +744,8 @@ def mech_dashboard(request):
 						lat+=i
 					else:
 						long+=i
-				print(lat)
-				print(type(lat))
+					print(lat)
+					print(type(lat))
 				dic['lat'] = float(lat)
 				dic['long'] = float(long)
 
@@ -738,41 +758,8 @@ def mech_dashboard(request):
 				dic['is_available'] = response['Items'][0]['is_available']
 				dic['is_verified'] = response['Items'][0]['is_verified']
 				dic['rating'] = response['Items'][0]['rating']
+				dic['g_name'] = response['Items'][0]['g_name']
 				print('umm')
-
-				# dynamodb = boto3.resource('dynamodb')
-				# table = dynamodb.Table('mBooking')
-				# response = table.scan()
-				# email = request.session['email_id']
-				# print(email)
-				# buy_email = []
-				# for i in response['Items']:
-				# 	if i['mech_email'] == email:
-				# 		buy_email.append(i['buyer_email'])
-				#
-				# dynamodb = boto3.resource('dynamodb')
-				# table = dynamodb.Table('User')
-				# response = table.scan()
-				#
-				#
-				#
-				# # contact = []
-				# # email_buyer = []
-				# final = []
-				# for i in response['Items']:
-				# 	if i['email_id'] in buy_email:
-				# 		result = {}
-				# 		result['email_buyer'] = i['email_id']
-				# 		result['contact'] = i['contact']
-				# 		final.append(result)
-				#
-				# 		# email_buyer.append(i['email_id'])
-				# 		# contact.append(i['contact'])
-				#
-				#
-				# dic['buyer_details_contact'] = final
-				# print(dic)
-
 
 				return render(request,'dashboard/mech.html',dic)
 		else:
@@ -786,6 +773,7 @@ def mech_dashboard(request):
 			lat = ""
 			long = ""
 			temp=0
+			print(response['Items'])
 			if response['Items'][0]['co_ordinates']!='-':
 				for i in response['Items'][0]['co_ordinates'][1:-1]:
 					if i==',':
@@ -1007,7 +995,7 @@ def employee_dashboard(request):
 			print(type(i['car_model']))
 			print(type(i['is_verified']))
 			print('b')
-			if(i['is_verified'] == False and i['car_model'] != '0'):
+			if(i['is_verified'] == False and i['car_model'] != '0' and i['co_ordinates']!='-'):
 				print(i['car_model'])
 				Cars.append(i)
 		print(Cars)
@@ -1016,7 +1004,7 @@ def employee_dashboard(request):
 		table = dynamodb.Table('Mechanic')
 		response = table.scan()
 		for i in response['Items']:
-			if(i['is_verified'] == False):
+			if(i['is_verified'] == False and i['co_ordinates']!='-' and i['service_charge']!=0):
 				Mechanics.append(i)
 		#print(Mechanics)
 		dic['Cars'] = Cars
@@ -1039,10 +1027,13 @@ def mechanic_booking(request):
 	print(response['Items'])
 
 	for j in response['Items']:
+		print(j['co_ordinates'])
+		print("--------------------------------")
 		temp=0
 		lat1 = ""
 		long1 = ""
-		if j['co_ordinates'] != '-' and j['is_available']==True and j['email_id']!=request.session['email_id']:
+		if j['co_ordinates'] != '-' and (j['is_available']==True or j['is_available']=="True" or j['is_available']=="true") and j['email_id']!=request.session['email_id']:
+			print(j['co_ordinates'])
 			for i in j['co_ordinates'][1:-1]:
 				if i==',':
 					temp=1
@@ -1066,6 +1057,7 @@ def mechanic_booking(request):
 	dic['long'] = long
 	dic['names'] = names
 	dic['emails'] = emails
+	print(dic)
 
 	return render(request,'dashboard/mech_book.html', dic)
 
@@ -1100,7 +1092,7 @@ def mech_details(request, email):
 
 	dic['email_id'] = email
 	request.session['mech_email'] = email
-
+	dic['img'] = response['Items'][0]['img']
 	dic['g_name'] = response['Items'][0]['g_name']
 	dic['service_charge'] = response['Items'][0]['service_charge']
 
@@ -1118,21 +1110,6 @@ def mech_details(request, email):
 	# dic['earnings'] =  response['Items'][0]['earnings']
 	# request.session['car_owner_earnings'] = int(response['Items'][0]['earnings'])
 	return render(request, 'dashboard/mech_details.html',dic)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def car_details(request, email):
 	print(email)
@@ -1178,6 +1155,7 @@ def car_details(request, email):
 	dic['is_verified'] =  response['Items'][0]['is_verified']
 	dic['rating'] =  response['Items'][0]['rating']
 	dic['earnings'] =  response['Items'][0]['earnings']
+	dic['img'] = response['Items'][0]['img']
 	request.session['car_owner_earnings'] = int(response['Items'][0]['earnings'])
 	return render(request, 'dashboard/car_details.html',dic)
 
@@ -1284,6 +1262,31 @@ def success_payment(request,value,email):
 					}
 				)
 
+				table = dynamodb.Table('User')
+				response = table.scan(
+					FilterExpression=Attr('email_id').eq(owner_email)
+				)
+				contact = response['Items'][0]['contact']
+				print(contact)
+				print(type(contact))
+				print(len(contact))
+				url = "https://www.fast2sms.com/dev/bulk"
+
+				querystring = {
+				"authorization":"9RICC43rcTNq2aVFBbrfzmtVCFXjs6SzZs3s8tOOFxUmBkPj4KGsFiFUfdA8",
+				"sender_id":"FSTSMS",
+				"message":"Your car has been booked",
+				"language":"english",
+				"route":"p",
+				"numbers":str(contact),
+				}
+
+				# headers = {
+				#     'cache-control': "no-cache"
+				# }
+
+				# response = requests.request("GET", url, headers=headers, params=querystring)
+				response = requests.get(url, params=querystring)
 		else:
 			if value=='yes':
 				# car_no = request.session['owner_car_number']
@@ -1330,7 +1333,31 @@ def success_payment(request,value,email):
 						'status':status,
 					}
 				)
+				table = dynamodb.Table('User')
+				response = table.scan(
+					FilterExpression=Attr('email_id').eq(mech_email)
+				)
+				contact = response['Items'][0]['contact']
+				print(contact)
+				print(type(contact))
+				print(len(contact))
+				url = "https://www.fast2sms.com/dev/bulk"
 
+				querystring = {
+				"authorization":"9RICC43rcTNq2aVFBbrfzmtVCFXjs6SzZs3s8tOOFxUmBkPj4KGsFiFUfdA8",
+				"sender_id":"FSTSMS",
+				"message":"You are booked!",
+				"language":"english",
+				"route":"p",
+				"numbers":str(contact),
+				}
+
+				# headers = {
+				#     'cache-control': "no-cache"
+				# }
+
+				# response = requests.request("GET", url, headers=headers, params=querystring)
+				response = requests.get(url, params=querystring)
 
 
 		return redirect('home')
