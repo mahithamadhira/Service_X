@@ -1,0 +1,226 @@
+{% extends 'home/base2.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+  body,
+html {
+         background-image: url('https://image.freepik.com/free-vector/abstract-blue-vector-background-with-triangles_56103-550.jpg'); 
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+.outer{
+  margin-left: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+.inner > img{
+  margin-top: 240px;
+  height: 349px;
+}.outer{
+  margin-left: 400px;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+.user_card {
+  opacity: 0.73;
+  width: 400px;
+  height: 349px;
+  margin-top: 320px;
+  background: #2e6bb1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+
+}
+
+.form_container {
+  margin-top: 20px;
+}
+
+#form-title{
+  color: #fff;
+
+}
+
+.login_btn {
+  width: 100%;
+  background:#05057a !important;
+  color: white !important;
+}
+.login_btn:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+.login_container {
+  padding: 0 2rem;
+}
+.input-group-text {
+  background: #395588 !important;
+  color: white !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_pass:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+#messages{
+  background-color: grey;
+  color: #fff;
+  padding: 10px;
+  margin-top: 10px;
+    }
+    .name{
+        padding-left: 100px;
+    }
+    .first{
+        border-radius: 4%;
+        font-size: 15px;
+        color:black;
+        font-weight: 900;
+    }
+    .butn{
+        margin-top: 40px;
+        height: 40px;
+    }
+    #map{
+      width: 100%;
+      height: 100ox;
+      flex: 60%;
+    }
+    .contact-in{
+      margin-top: 200px;
+      width: 90%;
+      margin-left: 100px;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 10px;
+      border-radius: 10px;
+    }
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script>
+
+  $(function () {
+      $("#agree").click(function () {
+          if ($(this).is(":checked")) {
+            console.log('a');
+              $("#agree_book").css("visibility", "visible");
+          } else {
+            console.log('b');
+            $("#agree_book").css("visibility", "hidden");
+          }
+      });
+  });
+
+
+</script>
+
+
+
+    <!-- <form method="POST" action="{% url 'checkout' %}">
+    {% csrf_token %}
+    <p style = "margin-left: 50px">{{ car_model }}</p>
+    <p style = "margin-left: 50px">{{ car_name }}</p>
+    <p style = "margin-left: 50px">{{ car_number }}</p>
+    <p style = "margin-left: 50px">{{ co_ordinates }}</p>
+    <p style = "margin-left: 50px">{{ cost_perday }}</p>
+    <div class="float-right">
+    <div class = "row">
+
+              <input type="checkbox" id="agree" name="agree" value="Agree">
+
+              <a href="{% url 'tandc' %}">
+              <label for="vehicle2"> I agree to the terms and conditions </label><br>
+              </a>
+
+      </div>
+
+
+      <div class="row">
+        <div id="agree_book" class="d-flex justify-content-center mt-3 login_container" style="visibility: hidden">
+          <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+          <input type = "number" name = "cost_perday" value = "{{ cost_perday }}" hidden>
+          <input  class="btn btn-lg btn-primary btn-submit login_btn" type="submit" value="Book this car">
+        </div>
+      </div>
+
+
+
+
+  </div>
+  </form> -->
+  <div class="outer">
+      <div class="inner">
+        <img src="{{ img }}">
+      </div>
+      <div class="first">
+        <div class="container contr h-100">
+            <div class="d-flex justify-content-center h-100">
+                <div class="user_card">
+                    <div class="d-flex justify-content-center">
+                        <form method="POST" enctype="multipart/form-data" action="{% url 'mech_checkout' %}">
+                            {% csrf_token %}
+                                <table class="tab" >
+                                <tr>
+                                <td>
+                          
+                                </tr>
+                                <tr><td>
+                                <label for="last name">Garage name</label><td>
+                                <input class="signup" type="text" name="lname" placeholder="Last name" value="{{ g_name }}"></td></tr>
+                                <tr><td>
+                                <label for="Username">E-mail</label><td>
+                                <input class="signup" type="email" name="username" placeholder="Username" value = "{{ email_id }}"></td></tr>
+                                <tr><td>
+                                <label for="Age">Cost($)</label><td>
+                                <input class="signup" type="number" name="age" placeholder="Cost per day" value = "{{ service_charge }}"></td></tr>
+                                <tr><td>
+                                <tr><td colspan="2">
+
+                                <!-- <input type="file" name="sentFile" value="{{ img }}"> <span id='val'></span> -->
+                                <br>
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" required>
+                                <label for="vehicle1"> I agree to the terms and conditions </label><br>
+                                <input type = "text" name = "email_id" value = "{{ i.email_id }}" hidden>
+                                <input type = "number" name = "service_charge" value = "{{ service_charge }}" hidden>
+                                  <input class="butn bth-primary btn-submit login_btn" type="submit" value="Book this Car">
+                                  {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <div class="container">
+                                        <strong> <h6 class="{{ message.tags }}" style = "color: #fa1e0a;">{{ message }}</h6></strong>
+                                    </div>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+

@@ -3,11 +3,18 @@
 {% load static %}
 
 {% block content %}
-<h1>..</h1>
-
-
-
-<table class="table table-bordered" style = "margin: 50px;">
+<!-- <div class="mai">
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <button class="dropdown-item" type="button">Action</button>
+      <button class="dropdown-item" type="button">Another action</button>
+      <button class="dropdown-item" type="button">Something else here</button>
+    </div>
+  </div>
+<table class="table table-bordered">
     <thead>
         <tr>
           <th scope="col">Verification ID</th>
@@ -33,6 +40,101 @@
     <td>1500</td>
     <br>
     {% endfor %}
-
 </table>
+</div> -->
+<style>
+  * {
+    font-family: sans-serif;
+  }
+
+  .content-table {
+    border-collapse: collapse;
+    margin-top: 140px;
+    margin-left: 400px;
+    font-size: 0.9em;
+    width: 800px;
+    height: 400px;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .content-table thead tr {
+    background-color: #0e046b;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .content-table th,
+  .content-table td {
+    padding: 12px 15px;
+  }
+
+  .content-table tbody tr {
+    border-bottom: 1px solid #4e46b6;
+  }
+
+  .content-table tbody tr:nth-of-type(even) {
+    background-color: #d8dbe9;
+  }
+
+  .content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #342996;
+  }
+
+  .content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+  }
+  .dropdown{
+    margin-top: 20px;
+    margin-left: 720px;
+  }
+  .btn{
+    background-color: rgb(16, 43, 94);
+    color: rgb(248, 248, 252);
+  }
+</style>
+<table class="content-table">
+  <thead>
+    <tr>
+      <th>Verification ID</th>
+      <th>Verified Email</th>
+      <th>Type</th>
+      <th>Earning</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for i in verified_cars %}
+      <tr>
+          <th scope="row">{{ i.sr }}</th>
+          <td>{{ i.checked_email }}</td>
+          <td>Car</td>
+          <td>1000</td>
+          <br>
+      </tr>
+      {% endfor %}
+
+      {% for i in verified_mechs %}
+      <th scope="row">{{ i.sr }}</th>
+      <td>{{ i.checked_email }}</td>
+      <td>Mechanic</td>
+      <td>1500</td>
+      <br>
+      {% endfor %}
+  </tbody>
+</table>
+<div class="dropdown">
+  <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Type
+  </button>
+  <div class="dropdown-menu">
+    <button class="dropdown-item" type="button">All</button>
+    <button class="dropdown-item" type="button">Cars</button>
+    <button class="dropdown-item" type="button">Mechanic</button>
+  </div>
+</div>
+
 {% endblock content %}

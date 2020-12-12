@@ -81,6 +81,7 @@ def signup(request):
                         'is_admin':False,
                         'is_staff':False,
                         'is_verified':False,
+                        'img': '',
                         }
                     )
                     response = table.scan(
@@ -113,6 +114,7 @@ def signup(request):
                             'is_available':False,
                             'is_verified' : False,
                             'rating' : -1,
+                            'img':'',
                         }
                     )
                     response = table.scan(

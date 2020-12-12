@@ -38,7 +38,11 @@ urlpatterns = [
     path('get_loc/',regv.get_loc, name="get_loc"),
     path('update_loc/',regv.update_loc,name="update_loc"),
     path('car_details_of/<str:email>/',dv.car_details,name="car_details"),
+    path('mech_details_of/<str:email>/',dv.mech_details,name="mech_details"),
     path('checkout/',dv.checkout_view, name = "checkout"),
+    path('tandc/',dv.tandc, name = "tandc"),
+    path('mech_checkout/',dv.mech_checkout_view, name = "mech_checkout"),
     path('success/<str:value>/<str:email>/',dv.success_payment, name = "success"),
+    path('mechanic-booking', dv.mechanic_booking, name="mechanic_booking"),
     path('api/',include('api.urls')),
 ]

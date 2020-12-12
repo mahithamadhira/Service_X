@@ -1,8 +1,13 @@
 {% extends 'home/base2.html' %}
 
 {% block content %}
-<h1>Checkout</h1>
-<h2>{{ cost_perday }}</h2>
+
+<div class="container" style="margin-top: 15%; margin-left: 30%">
+    <div class="container">
+    <h3 style = "margin-left: 15%">Checkout</h3>
+    <h5 style = "margin-left: 13.5%">You will be paying {{ cost_perday }} $</h5>
+    </div>
+
 <form method = "POST" action = "{% url 'home' %}">
     <input type = "text" id = "check" name = "check" value = "no" hidden>
 
@@ -12,7 +17,7 @@
 
 <!-- Set up a container element for the button -->
 <div id="paypal-button-container"></div>
-
+</div>
 <!-- Include the PayPal JavaScript SDK -->
 <script src="https://www.paypal.com/sdk/js?client-id=AWzxIpXX4dWGbZVnCCfRh_w7_5R0FEQRMMHlV94gxN39x03aN6q2C95ry1-KNeEIPtIv0HL6qt7DJVgd&currency=USD"></script>
 <script>

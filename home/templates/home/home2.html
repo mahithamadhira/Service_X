@@ -1,4 +1,5 @@
 {% extends "home/base2.html" %}
+{% load static %}
 {% block content %}
         <div class="container">
           <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -9,21 +10,21 @@
             </ol>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="http://dl.maxpixel.freegreatpicture.com/?f=blue-4696630_1920.jpg&type=View&token=730a3c8bed64afb4d2ae19d5e324fbeb&pid=4696630" class="d-block w-100" alt="...">
+                <img src='{% static "home/img/carousel.jpg" %}' class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                   <h1>Car renting services</h1>
                   <h2>Rent a car with just one click</h2>
                 </div>
               </div>
               <div class="carousel-item">
-                <img src="http://dl.maxpixel.freegreatpicture.com/?f=blue-4696630_1920.jpg&type=View&token=730a3c8bed64afb4d2ae19d5e324fbeb&pid=4696630" class="d-block w-100" alt="...">
+                <img src='{% static "home/img/carousel.jpg" %}' class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                   <h1>Mechanic service on tips</h5>
                   <h2>Mechanic service with just one click.</h2>
                 </div>
               </div>
               <div class="carousel-item">
-                <img src="http://dl.maxpixel.freegreatpicture.com/?f=blue-4696630_1920.jpg&type=View&token=730a3c8bed64afb4d2ae19d5e324fbeb&pid=4696630" class="d-block w-100" alt="...">
+                <img src='{% static "home/img/carousel.jpg" %}' class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                   <h1>Car booking services</h1>
                   <h2>Book a car with just one click</h2>
@@ -50,6 +51,9 @@
 
 		<!-- Google Maps API -->
 		 <div id="map" style="height: 600px">&nbsp;</div>
+
+
+
 
     <script>
       // In the following example, markers appear when the user clicks on the map.
@@ -135,6 +139,14 @@
 		</div>
 	</div>
 
+<div style = "margin:30px; margin-left:50%;">
+  <div class="row" style="margin:20px;margin-left: 6%;"><h5>OR</h5></div>
+  <div class="row">
+  <a href="{% url 'mechanic_booking' %}">
+    <button type="button" class="btn btn-lg btn-primary" >Book a mechanic</button>
+  </a>
+</div>
+</div>
 
 
         <section id="About">
